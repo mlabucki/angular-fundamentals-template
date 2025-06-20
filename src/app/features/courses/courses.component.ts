@@ -5,7 +5,7 @@ import { Course } from "@app/types/types";
 @Component({
   selector: "app-courses",
   templateUrl: "./courses.component.html",
-  styleUrls: ["./courses.component.css"],
+  styleUrls: ["./courses.component.scss"],
 })
 export class CoursesComponent {
   coursesList = mockedCoursesList;
