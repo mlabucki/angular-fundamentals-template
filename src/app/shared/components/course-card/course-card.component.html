@@ -20,15 +20,12 @@
       </div>
     </div>
     <div class="course-card__info-actions">
-      <app-button
-        [buttonText]="'Show course'"
-        (click)="onShowClick()"
-      ></app-button>
+      <app-button [buttonText]="'Show course'" (click)="onShow()"></app-button>
       <ng-container *ngIf="editable">
-        <button class="icon-btn" title="Remove" (click)="onDeleteClick()">
+        <button class="icon-btn" title="Remove" (click)="onDelete()">
           <fa-icon [icon]="['fas', 'trash']" [style.fontSize.px]="18"></fa-icon>
         </button>
-        <button class="icon-btn" title="Edit" (click)="onEditClick()">
+        <button class="icon-btn" title="Edit" (click)="onEdit()">
           <fa-icon [icon]="['fas', 'pen']" [style.fontSize.px]="18"></fa-icon>
         </button>
       </ng-container>

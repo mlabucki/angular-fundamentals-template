@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from "@angular/core";
 
 export interface Course {
+  id: string;
   title: string;
   description: string;
   creationDate: Date | string;
@@ -18,16 +19,18 @@ export class CourseCardComponent {
   @Input() editable = false;
 
   @Output() clickOnShow = new EventEmitter<Course>();
+  @Output() editCourse = new EventEmitter<Course>();
+  @Output() deleteCourse = new EventEmitter<Course>();
 
-  onShowClick() {
+  onShow() {
     this.clickOnShow.emit(this.course);
   }
 
-  onEditClick() {
-    alert("Edited");
+  onEdit() {
+    this.editCourse.emit(this.course);
   }
 
-  onDeleteClick() {
-    alert("Deleted");
+  onDelete() {
+    this.deleteCourse.emit(this.course);
   }
 }

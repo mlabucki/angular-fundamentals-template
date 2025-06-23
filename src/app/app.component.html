@@ -1,17 +1,24 @@
 <app-header>
-  <p>Michal</p>
+  <p>Michal Labucki</p>
   <app-button buttonText="LOGOUT"></app-button>
-  <app-button iconName="trash"></app-button>
 </app-header>
 
-<div class="centered-wrapper">
-  <app-info
-    title="Your List Is Empty"
-    text="Please use 'Add New Course' button to add your first course"
-  >
-    <app-button buttonText="ADD NEW COURSE"></app-button>
-  </app-info>
-</div>
+<app-info
+  title="Your List Is Empty"
+  text="Please use 'Add New Course' button to add your first course"
+>
+  <app-button buttonText="ADD NEW COURSE"></app-button>
+</app-info>
+
+<app-course-list
+  [courses]="courses"
+  [editable]="editable"
+  (showCourse)="showCourse($event)"
+  (editCourse)="editCourse($event)"
+  (deleteCourse)="deleteCourse($event)"
+></app-course-list>
+
+<!-- <app-course-info></app-course-info> -->
 
 <div class="app-root">
   <!-- Search component -->
