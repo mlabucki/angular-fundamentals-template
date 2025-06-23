@@ -25,11 +25,11 @@
         (click)="onShowClick()"
       ></app-button>
       <ng-container *ngIf="editable">
-        <button class="icon-btn" title="Remove">
-          <fa-icon [icon]="['fas', 'trash']" [style.fontSize.px]="16"></fa-icon>
+        <button class="icon-btn" title="Remove" (click)="onDeleteClick()">
+          <fa-icon [icon]="['fas', 'trash']" [style.fontSize.px]="18"></fa-icon>
         </button>
-        <button class="icon-btn" title="Edit">
-          <fa-icon [icon]="['fas', 'pen']" [style.fontSize.px]="16"></fa-icon>
+        <button class="icon-btn" title="Edit" (click)="onEditClick()">
+          <fa-icon [icon]="['fas', 'pen']" [style.fontSize.px]="18"></fa-icon>
         </button>
       </ng-container>
       <ng-content></ng-content>

@@ -22,4 +22,12 @@ export class CourseCardComponent {
   onShowClick() {
     this.clickOnShow.emit(this.course);
   }
+
+  onEditClick() {
+    alert("Edited");
+  }
+
+  onDeleteClick() {
+    alert("Deleted");
+  }
 }
