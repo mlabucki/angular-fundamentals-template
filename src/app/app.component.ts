@@ -25,4 +25,8 @@ export class AppComponent {
   deleteCourse(course: any) {
     alert("Delete: " + course.title);
   }
+
+  onBackClick() {
+    alert("Back button clicked ");
+  }
 }
