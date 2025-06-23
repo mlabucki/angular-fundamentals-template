@@ -1,4 +1,5 @@
-<button class="app-button">
+<div class="app-button">
   <fa-icon *ngIf="iconName" [icon]="iconName" class="icon"></fa-icon>
   <span *ngIf="buttonText">{{ buttonText }}</span>
-</button>
+  <ng-content></ng-content>
+</div>
