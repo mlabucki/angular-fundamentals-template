@@ -11,7 +11,6 @@ import {
   LoginFormComponent,
   RegistrationFormComponent,
   CourseFormComponent,
-  CourseListComponent,
 } from "./components";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { DurationPipe } from "./pipes/duration.pipe";
@@ -25,7 +24,6 @@ const components = [
   SearchComponent,
   ModalComponent,
   CourseCardComponent,
-  CourseListComponent,
   LoginFormComponent,
   RegistrationFormComponent,
   CourseFormComponent,

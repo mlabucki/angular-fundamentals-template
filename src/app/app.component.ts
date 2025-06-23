@@ -8,23 +8,7 @@ import { mockedCoursesList } from "./shared/mocks/mocks";
 })
 export class AppComponent {
   title = "courses-app";
-
-  coursesCount = 3;
-  editable = true;
-
-  courses = mockedCoursesList.slice(0, this.coursesCount);
-
-  showCourse(course: any) {
-    alert("Show: " + course.title);
-  }
-
-  editCourse(course: any) {
-    alert("Edit: " + course.title);
-  }
-
-  deleteCourse(course: any) {
-    alert("Delete: " + course.title);
-  }
+  courses = mockedCoursesList.slice(0, 1); // tylko dla course-info
 
   onBackClick() {
     alert("Back button clicked ");

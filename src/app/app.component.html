@@ -10,18 +10,12 @@
   <app-button buttonText="ADD NEW COURSE"></app-button>
 </app-info>
 
+<app-courses></app-courses>
+
 <app-course-info
   [course]="courses[0]"
   (backClick)="onBackClick()"
 ></app-course-info>
-
-<app-course-list
-  [courses]="courses"
-  [editable]="editable"
-  (showCourse)="showCourse($event)"
-  (editCourse)="editCourse($event)"
-  (deleteCourse)="deleteCourse($event)"
-></app-course-list>
 
 <div class="app-root">
   <!-- Search component -->
