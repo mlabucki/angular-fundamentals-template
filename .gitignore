@@ -11,6 +11,9 @@
 # production
 /build
 
+# Angular
+.angular/
+
 # misc
 .DS_Store
 .env.local
