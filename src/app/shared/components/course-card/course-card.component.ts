@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from "@angular/core";
+import { mockedAuthorsList } from "../../mocks/mocks";
 
 export interface Course {
   id: string;
@@ -32,5 +33,14 @@ export class CourseCardComponent {
 
   onDelete() {
     this.deleteCourse.emit(this.course);
+  }
+
+  getAuthorNames(): string {
+    return this.course.authors
+      .map((authorId) => {
+        const author = mockedAuthorsList.find((a) => a.id === authorId);
+        return author ? author.name : authorId;
+      })
+      .join(", ");
   }
 }
