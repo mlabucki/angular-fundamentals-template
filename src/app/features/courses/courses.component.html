@@ -1,3 +1,4 @@
+<app-search (search)="onSearchCourses($event)"></app-search>
 <app-courses-list
   [courses]="coursesList"
   [editable]="true"
@@ -8,8 +9,5 @@
 >
 </app-courses-list>
 <ng-template #infoTemplate>
-  <app-course-info
-    [course]="detailedCourse"
-    (goBack)="showList()"
-  ></app-course-info>
+  <app-course-info [course]="detailedCourse" (goBack)="showList()"></app-course-info>
 </ng-template>

@@ -19,6 +19,10 @@ export class CoursesComponent implements OnInit {
     }));
   }
 
+  onSearchCourses(searchText: string) {
+    console.log(`show search text: ${searchText}`);
+  }
+
   showInfo(course: Course) {
     this.listVisible = !this.listVisible;
     this.detailedCourse = course;
