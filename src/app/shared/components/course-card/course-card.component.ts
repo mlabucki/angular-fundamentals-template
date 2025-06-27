@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Course } from "@app/types/types";
 
 @Component({
   selector: "app-course-card",
@@ -6,7 +7,7 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
   styleUrls: ["./course-card.component.scss"],
 })
 export class CourseCardComponent {
-  @Input() course!: any;
+  @Input() course!: Course;
   @Input() editable: boolean = false;
   @Output() clickOnShow = new EventEmitter<void>();
 }

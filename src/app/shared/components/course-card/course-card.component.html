@@ -12,20 +12,15 @@
       </div>
       <div>
         <b>Duration: </b
-        ><span class="course-card__duration">{{ course.duration }} hours</span>
+        ><span class="course-card__duration">{{ course.duration | duration }}</span>
       </div>
       <div>
         <b>Created: </b
-        ><span class="course-card__date">{{
-          course.creationDate.split("/").join(".")
-        }}</span>
+        ><span class="course-card__date">{{ course.creationDate | customDate }}</span>
       </div>
     </div>
     <div class="course-card__info-actions">
-      <app-button
-        [buttonText]="'Show course'"
-        (click)="clickOnShow.emit()"
-      ></app-button>
+      <app-button [buttonText]="'Show course'" (click)="clickOnShow.emit()"></app-button>
       <div class="course-card__buttons" *ngIf="editable">
         <ng-content></ng-content>
       </div>

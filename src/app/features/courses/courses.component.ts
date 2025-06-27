@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { mockedCoursesList } from "@app/shared/mocks/mocks";
 import { Course } from "@app/types/types";
 
@@ -7,10 +7,17 @@ import { Course } from "@app/types/types";
   templateUrl: "./courses.component.html",
   styleUrls: ["./courses.component.scss"],
 })
-export class CoursesComponent {
-  coursesList = mockedCoursesList;
+export class CoursesComponent implements OnInit {
+  coursesList: Course[] = [];
   listVisible: boolean = true;
   detailedCourse!: Course;
+
+  ngOnInit(): void {
+    this.coursesList = mockedCoursesList.map((course) => ({
+      ...course,
+      creationDate: new Date(course.creationDate),
+    }));
+  }
 
   showInfo(course: Course) {
     this.listVisible = !this.listVisible;
