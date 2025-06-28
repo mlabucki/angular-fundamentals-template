@@ -7,8 +7,6 @@ import { Directive, HostBinding } from "@angular/core";
 export class TogglePasswordDirective {
   private isPasswordVisible = false;
 
-  constructor() {}
-
   @HostBinding("attr.type") inputType = "password";
 
   get visible(): boolean {

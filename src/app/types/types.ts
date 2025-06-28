@@ -6,3 +6,8 @@ export type Course = {
   duration: number;
   authors: string[];
 };
+
+export type Author = {
+  id: string;
+  name: string;
+};
