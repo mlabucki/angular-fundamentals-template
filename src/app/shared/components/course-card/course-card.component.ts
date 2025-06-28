@@ -22,15 +22,15 @@ export class CourseCardComponent {
   @Output() clickOnEdit = new EventEmitter<string>();
   @Output() clickOnDelete = new EventEmitter<string>();
 
-  onShowCourse() {
+  onShowCourse(): void {
     this.clickOnShow.emit(this.course.id);
   }
 
-  onEditCourse() {
+  onEditCourse(): void {
     this.clickOnEdit.emit(this.course.id);
   }
 
-  onDeleteCourse() {
+  onDeleteCourse(): void {
     this.clickOnDelete.emit(this.course.id);
   }
 }
