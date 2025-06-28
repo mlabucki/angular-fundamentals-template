@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from "@angular/core";
 import { mockedAuthorsList } from "../../mocks/mocks";
+import { getAuthorsWithNamesAndIds } from "../../utils/author-utils";
 
 export interface Course {
   id: string;
@@ -35,12 +36,7 @@ export class CourseCardComponent {
     this.deleteCourse.emit(this.course);
   }
 
-  getAuthorNames(): string {
-    return this.course.authors
-      .map((authorId) => {
-        const author = mockedAuthorsList.find((a) => a.id === authorId);
-        return author ? author.name : authorId;
-      })
-      .join(", ");
+  getAuthorsWithNamesAndIds(): string {
+    return getAuthorsWithNamesAndIds(this.course.authors);
   }
 }
