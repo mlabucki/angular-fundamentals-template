@@ -16,6 +16,7 @@
 <app-courses></app-courses>
 
 <app-course-info
+  *ngIf="courses[0]"
   [course]="courses[0]"
   (backClick)="onBackClick()"
 ></app-course-info>
