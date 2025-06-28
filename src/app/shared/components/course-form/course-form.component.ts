@@ -1,5 +1,11 @@
 import { Component } from "@angular/core";
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from "@angular/forms";
 import { Author } from "@app/types/types";
 import { FaIconLibrary } from "@fortawesome/angular-fontawesome";
 import { fas } from "@fortawesome/free-solid-svg-icons";
@@ -25,7 +31,10 @@ export class CourseFormComponent {
       title: ["", [Validators.required, Validators.minLength(2)]],
       description: ["", [Validators.required, Validators.minLength(2)]],
       duration: [null, [Validators.required, Validators.min(0)]],
-      author: ["", [Validators.minLength(2), Validators.pattern(/^[a-zA-Z0-9 ]+$/)]],
+      author: [
+        "",
+        [Validators.minLength(2), Validators.pattern(/^[a-zA-Z0-9 ]+$/)],
+      ],
       authors: this.fb.array([]),
     });
   }
@@ -47,24 +56,26 @@ export class CourseFormComponent {
       name,
     };
 
-    this.authors.push(this.fb.group(newAuthor));
+    this.authors.push(new FormControl(newAuthor));
     this.author?.reset();
   }
 
   addAuthorToCourse(index: number): void {
-    const author = this.authors.at(index).value as Author;
-    this.courseAuthors.push(author);
+    const selectedAuthor = this.authors.at(index).value as Author;
+    this.courseAuthors.push(selectedAuthor);
     this.authors.removeAt(index);
   }
 
   removeAuthorFromCourse(index: number): void {
-    const author = this.courseAuthors[index];
+    const removedAuthor = this.courseAuthors[index];
     this.courseAuthors.splice(index, 1);
-    this.authors.push(this.fb.group(author));
+    this.authors.push(new FormControl(removedAuthor));
   }
 
   removeAuthorFromList(id: string): void {
-    const index = this.authors.controls.findIndex((ctrl) => ctrl.value.id === id);
+    const index = this.authors.controls.findIndex(
+      (ctrl) => ctrl.value.id === id
+    );
     this.authors.removeAt(index);
   }
 
