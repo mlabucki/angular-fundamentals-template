@@ -6,9 +6,9 @@ import { mockedAuthorsList } from "../mocks/mocks";
 })
 export class CustomDatePipe implements PipeTransform {
   transform(value: Date | string | number): string {
-    if (!value) return "";
+    if (!value) return "Creation Date";
     const date = new Date(value);
-    if (isNaN(date.getTime())) return "";
+    if (isNaN(date.getTime())) return "Creation Date";
 
     const day = String(date.getDate()).padStart(2, "0");
     const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -22,7 +22,8 @@ export class CustomDatePipe implements PipeTransform {
 })
 export class DurationPipe implements PipeTransform {
   transform(value: number): string {
-    if (typeof value !== "number" || isNaN(value) || value < 0) return "";
+    if (typeof value !== "number" || isNaN(value) || value < 0)
+      return "Duration";
     const hours = Math.floor(value / 60);
     const minutes = value % 60;
     return `${hours}:${minutes < 10 ? "0" : ""}${minutes} hours`;
@@ -35,7 +36,7 @@ export class DurationPipe implements PipeTransform {
 export class AuthorNamesPipe implements PipeTransform {
   transform(authorIds: string[]): string {
     if (!authorIds || !Array.isArray(authorIds) || authorIds.length === 0) {
-      return "No authors";
+      return "Authors";
     }
 
     return authorIds

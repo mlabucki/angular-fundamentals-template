@@ -1,16 +1,16 @@
 <!-- Replace ::text:: with your code -->
 
 <div class="course-info-wrapper" *ngIf="course">
-  <div class="title">{{ course.title }}</div>
+  <div class="title">{{ course?.title || "Title }}</div>
   <div class="course-info">
     <div class="course-info__description">
       <div><b>Description:</b></div>
-      <div>{{ course.description }}</div>
+      <div>{{ course.description || "Description" }}</div>
     </div>
     <div class="course-info__details">
       <div class="course-info__detail">
         <span><b>ID:</b></span>
-        <span>{{ course.id }}</span>
+        <span>{{ course.id || "id" }}</span>
       </div>
       <div class="course-info__detail">
         <span><b>Duration:</b></span>

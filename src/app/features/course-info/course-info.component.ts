@@ -15,7 +15,7 @@ import { Course } from "../../shared/components/course-card/course-card.componen
   styleUrls: ["./course-info.component.scss"],
 })
 export class CourseInfoComponent implements OnInit, OnChanges {
-  @Input() course!: Course;
+  @Input() course?: Course;
 
   @Output() backClick = new EventEmitter<void>();
 
