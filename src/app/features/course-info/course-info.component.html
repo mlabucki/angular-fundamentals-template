@@ -1,6 +1,6 @@
 <!-- Replace ::text:: with your code -->
 
-<div class="course-info-wrapper">
+<div class="course-info-wrapper" *ngIf="course">
   <div class="title">{{ course.title }}</div>
   <div class="course-info">
     <div class="course-info__description">
@@ -29,4 +29,9 @@
   <div class="navigation-block">
     <app-button buttonText="BACK" (click)="onBackClick()"></app-button>
   </div>
+</div>
+
+<!-- Loading state gdy course nie jest dostępny -->
+<div *ngIf="!course" class="loading-state">
+  <p>Loading course information...</p>
 </div>
