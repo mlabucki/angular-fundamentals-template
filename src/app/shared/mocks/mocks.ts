@@ -25,7 +25,7 @@ export const mockedCoursesList = [
     ],
   },
   {
-    id: "3",
+    id: "a8b9c0d1-e2f3-4567-8901-234567890abc",
     title: "ASP .NET",
     description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
                     has been the industry's standard dummy text ever since the 1500s, when an unknown
