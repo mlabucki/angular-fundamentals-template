@@ -8,7 +8,7 @@ import { Course } from "../../shared/components/course-card/course-card.componen
   styleUrls: ["./courses.component.scss"],
 })
 export class CoursesComponent {
-  coursesCount = 3;
+  coursesCount = 2;
   editable = true;
   courses = mockedCoursesList.slice(0, this.coursesCount);
 
