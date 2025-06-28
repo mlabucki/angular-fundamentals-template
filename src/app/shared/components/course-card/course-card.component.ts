@@ -1,6 +1,4 @@
 import { Component, Input, Output, EventEmitter } from "@angular/core";
-import { mockedAuthorsList } from "../../mocks/mocks";
-import { getAuthorsWithNamesAndIds } from "../../utils/author-utils";
 
 export interface Course {
   id: string;
@@ -18,25 +16,21 @@ export interface Course {
 })
 export class CourseCardComponent {
   @Input() course!: Course;
-  @Input() editable = false;
+  @Input() editable = true;
 
-  @Output() clickOnShow = new EventEmitter<Course>();
-  @Output() editCourse = new EventEmitter<Course>();
-  @Output() deleteCourse = new EventEmitter<Course>();
+  @Output() clickOnShow = new EventEmitter<string>();
+  @Output() clickOnEdit = new EventEmitter<string>();
+  @Output() clickOnDelete = new EventEmitter<string>();
 
-  onShow() {
-    this.clickOnShow.emit(this.course);
+  onShowCourse() {
+    this.clickOnShow.emit(this.course.id);
   }
 
-  onEdit() {
-    this.editCourse.emit(this.course);
+  onEditCourse() {
+    this.clickOnEdit.emit(this.course.id);
   }
 
-  onDelete() {
-    this.deleteCourse.emit(this.course);
-  }
-
-  getAuthorsWithNamesAndIds(): string {
-    return getAuthorsWithNamesAndIds(this.course.authors);
+  onDeleteCourse() {
+    this.clickOnDelete.emit(this.course.id);
   }
 }

@@ -14,15 +14,24 @@ export class CoursesListComponent {
   @Output() editCourse = new EventEmitter<Course>();
   @Output() deleteCourse = new EventEmitter<Course>();
 
-  handleShow(course: Course) {
-    this.showCourse.emit(course);
+  handleShow(courseId: string) {
+    const course = this.courses.find((c) => c.id === courseId);
+    if (course) {
+      this.showCourse.emit(course);
+    }
   }
 
-  handleEdit(course: Course) {
-    this.editCourse.emit(course);
+  handleEdit(courseId: string) {
+    const course = this.courses.find((c) => c.id === courseId);
+    if (course) {
+      this.editCourse.emit(course);
+    }
   }
 
-  handleDelete(course: Course) {
-    this.deleteCourse.emit(course);
+  handleDelete(courseId: string) {
+    const course = this.courses.find((c) => c.id === courseId);
+    if (course) {
+      this.deleteCourse.emit(course);
+    }
   }
 }

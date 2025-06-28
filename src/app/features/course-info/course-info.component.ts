@@ -1,6 +1,5 @@
 import { Component, Input, Output, EventEmitter } from "@angular/core";
 import { Course } from "../../shared/components/course-card/course-card.component";
-import { getAuthorsWithNamesAndIds } from "../../shared/utils/author-utils";
 
 @Component({
   selector: "app-course-info",
@@ -14,9 +13,5 @@ export class CourseInfoComponent {
 
   onBackClick() {
     this.backClick.emit();
-  }
-
-  getAuthorsWithNamesAndIds(): string {
-    return getAuthorsWithNamesAndIds(this.course.authors);
   }
 }

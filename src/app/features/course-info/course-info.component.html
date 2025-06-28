@@ -14,15 +14,15 @@
       </div>
       <div class="course-info__detail">
         <span><b>Duration:</b></span>
-        <span>{{ course.duration }}</span>
+        <span>{{ course.duration | duration }}</span>
       </div>
       <div class="course-info__detail">
         <span><b>Created:</b></span>
-        <span>{{ course.creationDate }}</span>
+        <span>{{ course.creationDate | customDate }}</span>
       </div>
       <div class="course-info__detail">
         <span><b>Authors:</b></span>
-        <span>{{ getAuthorsWithNamesAndIds() }}</span>
+        <span>{{ course.authors | authorNames }}</span>
       </div>
     </div>
   </div>
