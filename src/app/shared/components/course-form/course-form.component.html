@@ -74,7 +74,7 @@
                 id="author"
                 class="fixed-width"
                 placeholder="Input Author Name"
-                [formControl]="authorControl"
+                [formControl]="author"
               />
               <app-button
                 id="createAuthor"
@@ -85,7 +85,7 @@
             <span
               id="authorErrorMessage"
               class="text-danger"
-              *ngIf="authorControl.invalid && (authorControl.touched || courseForm.touched)"
+              *ngIf="authors.invalid && (author.touched || courseForm.touched)"
               >New author should contain only latin letters and numbers.</span
             >
             <div class="course__authors">
@@ -112,13 +112,9 @@
           <h3>Course Authors</h3>
           <div
             class="course__authors-item"
-            *ngFor="
-              let author of courseAuthorsControls;
-              let i = index;
-              trackBy: trackByAuthorIndex
-            "
+            *ngFor="let author of courseAuthors; let i = index; trackBy: trackByAuthorIndex"
           >
-            {{ author.value.name }}
+            {{ author.name }}
             <span class="course__icon" (click)="removeAuthorFromCourse(i)">
               <img src="assets/trash.svg" alt="trash" />
             </span>

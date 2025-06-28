@@ -1,7 +1,7 @@
 import { Directive, HostBinding } from "@angular/core";
 
 @Directive({
-  selector: "[appTogglePassword]",
+  selector: "[togglePassword]",
   exportAs: "togglePassword",
 })
 export class TogglePasswordDirective {

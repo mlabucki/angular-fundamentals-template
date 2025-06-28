@@ -12,6 +12,7 @@ import { fas } from "@fortawesome/free-solid-svg-icons";
 export class CourseFormComponent {
   courseForm!: FormGroup;
   submitted = false;
+  courseAuthors: Author[] = [];
 
   constructor(public fb: FormBuilder, public library: FaIconLibrary) {
     library.addIconPacks(fas);
@@ -26,7 +27,6 @@ export class CourseFormComponent {
       duration: [null, [Validators.required, Validators.min(0)]],
       author: ["", [Validators.minLength(2), Validators.pattern(/^[a-zA-Z0-9 ]+$/)]],
       authors: this.fb.array([]),
-      courseAuthors: this.fb.array([]),
     });
   }
 
@@ -34,45 +34,33 @@ export class CourseFormComponent {
     return this.courseForm?.get("authors") as FormArray;
   }
 
-  get authorsArray(): FormArray<FormControl<string>> {
-    return this.courseForm?.get("authors") as FormArray<FormControl<string>>;
-  }
-
-  get courseAuthors(): FormArray {
-    return this.courseForm?.get("courseAuthors") as FormArray;
-  }
-
-  get authorControl(): FormControl<string> {
+  get author(): FormControl<string> {
     return this.courseForm?.get("author") as FormControl<string>;
   }
 
-  get courseAuthorsControls() {
-    return (this.courseForm.get("courseAuthors") as FormArray).controls;
-  }
-
   createAuthor(): void {
-    const name = this.authorControl?.value?.trim();
-    if (!name || this.authorControl?.invalid) return;
+    const name = this.author?.value?.trim();
+    if (!name || this.author?.invalid) return;
 
     const newAuthor: Author = {
-      id: crypto.randomUUID(),
+      id: Date.now().toString(),
       name,
     };
 
-    this.authors.push(new FormControl(newAuthor));
-    this.authorControl?.reset();
+    this.authors.push(this.fb.group(newAuthor));
+    this.author?.reset();
   }
 
   addAuthorToCourse(index: number): void {
-    const selectedAuthor = this.authors.at(index).value as Author;
-    this.courseAuthors.push(new FormControl(selectedAuthor));
+    const author = this.authors.at(index).value as Author;
+    this.courseAuthors.push(author);
     this.authors.removeAt(index);
   }
 
   removeAuthorFromCourse(index: number): void {
-    const removedAuthor = this.courseAuthors.at(index).value as Author;
-    this.courseAuthors.removeAt(index);
-    this.authors.push(new FormControl(removedAuthor));
+    const author = this.courseAuthors[index];
+    this.courseAuthors.splice(index, 1);
+    this.authors.push(this.fb.group(author));
   }
 
   removeAuthorFromList(id: string): void {
@@ -88,8 +76,9 @@ export class CourseFormComponent {
     this.submitted = true;
     if (this.courseForm?.valid) {
       console.log("submit course form", this.courseForm?.value);
-      this.authorsArray?.clear();
+      this.authors?.clear();
       this.courseForm?.reset();
+      this.courseAuthors = [];
       this.submitted = false;
     } else {
       this.courseForm?.markAllAsTouched();
