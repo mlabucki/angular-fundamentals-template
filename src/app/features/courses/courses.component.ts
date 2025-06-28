@@ -3,7 +3,7 @@ import { mockedCoursesList } from "@app/shared/mocks/mocks";
 import { Course } from "@app/types/types";
 
 @Component({
-  selector: "app-courses",
+  selector: "app-courses[detailedCourse]",
   templateUrl: "./courses.component.html",
   styleUrls: ["./courses.component.scss"],
 })

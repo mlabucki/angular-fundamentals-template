@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { Course } from "@app/types/types";
 
 @Component({
-  selector: "app-courses-list",
+  selector: "app-courses-list[editable]",
   templateUrl: "./courses-list.component.html",
   styleUrls: ["./courses-list.component.scss"],
 })

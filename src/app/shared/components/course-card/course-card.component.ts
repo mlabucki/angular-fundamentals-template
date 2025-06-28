@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { Course } from "@app/types/types";
 
 @Component({
-  selector: "app-course-card",
+  selector: "app-course-card[course]",
   templateUrl: "./course-card.component.html",
   styleUrls: ["./course-card.component.scss"],
 })

@@ -93,10 +93,14 @@
               <h4>Author List</h4>
               <div
                 class="course__authors-item"
-                *ngFor="let author of authors.controls; trackBy: trackByAuthorIndex"
+                *ngFor="
+                  let author of authors.controls;
+                  let i = index;
+                  trackBy: trackByAuthorIndex
+                "
               >
                 {{ author.value.name }}
-                <span class="course__icon" (click)="addAuthorToCourse(author.value)"> + </span>
+                <span class="course__icon" (click)="addAuthorToCourse(i)"> + </span>
                 <span class="course__icon" (click)="removeAuthorFromList(author.value.id)">
                   <img src="assets/trash.svg" alt="trash" />
                 </span>
@@ -108,10 +112,10 @@
           <h3>Course Authors</h3>
           <div
             class="course__authors-item"
-            *ngFor="let author of courseAuthors; trackBy: trackByAuthorIndex"
+            *ngFor="let author of courseAuthors; let i = index; trackBy: trackByAuthorIndex"
           >
             {{ author.name }}
-            <span class="course__icon" (click)="removeAuthorFromCourse(author.id)">
+            <span class="course__icon" (click)="removeAuthorFromCourse(i)">
               <img src="assets/trash.svg" alt="trash" />
             </span>
           </div>

@@ -51,30 +51,20 @@ export class CourseFormComponent {
       name,
     };
 
-    this.authors.push(
-      new FormGroup({
-        id: new FormControl(newAuthor.id),
-        name: new FormControl(newAuthor.name),
-      })
-    );
+    this.authors.push(new FormControl(newAuthor));
     this.authorControl?.reset();
   }
 
-  addAuthorToCourse(author: Author): void {
-    this.courseAuthors = [...this.courseAuthors, author];
-    const index = this.authors.controls.findIndex((ctrl) => ctrl.value.id === author.id);
+  addAuthorToCourse(index: number): void {
+    const selectedAuthor = this.authors.at(index).value as Author;
+    this.courseAuthors.push(selectedAuthor);
     this.authors.removeAt(index);
   }
 
-  removeAuthorFromCourse(id: string): void {
-    const removedAuthor = this.courseAuthors.find((a) => a.id === id);
-    if (!removedAuthor) return;
-    this.authors.push(
-      new FormGroup({
-        id: new FormControl(removedAuthor.id),
-        name: new FormControl(removedAuthor.name),
-      })
-    );
+  removeAuthorFromCourse(index: number): void {
+    const removedAuthor = this.courseAuthors[index];
+    this.courseAuthors.splice(index, 1);
+    this.authors.push(new FormControl(removedAuthor));
   }
 
   removeAuthorFromList(id: string): void {
