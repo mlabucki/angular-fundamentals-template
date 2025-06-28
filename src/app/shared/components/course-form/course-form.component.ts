@@ -12,7 +12,6 @@ import { fas } from "@fortawesome/free-solid-svg-icons";
 export class CourseFormComponent {
   courseForm!: FormGroup;
   submitted = false;
-  courseAuthors: Author[] = [];
 
   constructor(public fb: FormBuilder, public library: FaIconLibrary) {
     library.addIconPacks(fas);
@@ -27,6 +26,7 @@ export class CourseFormComponent {
       duration: [null, [Validators.required, Validators.min(0)]],
       author: ["", [Validators.minLength(2), Validators.pattern(/^[a-zA-Z0-9 ]+$/)]],
       authors: this.fb.array([]),
+      courseAuthors: this.fb.array([]),
     });
   }
 
@@ -38,8 +38,16 @@ export class CourseFormComponent {
     return this.courseForm?.get("authors") as FormArray<FormControl<string>>;
   }
 
+  get courseAuthors(): FormArray {
+    return this.courseForm?.get("courseAuthors") as FormArray;
+  }
+
   get authorControl(): FormControl<string> {
     return this.courseForm?.get("author") as FormControl<string>;
+  }
+
+  get courseAuthorsControls() {
+    return (this.courseForm.get("courseAuthors") as FormArray).controls;
   }
 
   createAuthor(): void {
@@ -57,13 +65,13 @@ export class CourseFormComponent {
 
   addAuthorToCourse(index: number): void {
     const selectedAuthor = this.authors.at(index).value as Author;
-    this.courseAuthors.push(selectedAuthor);
+    this.courseAuthors.push(new FormControl(selectedAuthor));
     this.authors.removeAt(index);
   }
 
   removeAuthorFromCourse(index: number): void {
-    const removedAuthor = this.courseAuthors[index];
-    this.courseAuthors.splice(index, 1);
+    const removedAuthor = this.courseAuthors.at(index).value as Author;
+    this.courseAuthors.removeAt(index);
     this.authors.push(new FormControl(removedAuthor));
   }
 
@@ -80,7 +88,6 @@ export class CourseFormComponent {
     this.submitted = true;
     if (this.courseForm?.valid) {
       console.log("submit course form", this.courseForm?.value);
-      this.courseAuthors = [];
       this.authorsArray?.clear();
       this.courseForm?.reset();
       this.submitted = false;

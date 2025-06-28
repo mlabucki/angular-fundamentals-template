@@ -35,7 +35,7 @@ const components = [
 ];
 
 @NgModule({
-  declarations: [components, TogglePasswordDirective],
+  declarations: [...components],
   imports: [CommonModule, FontAwesomeModule, FormsModule, ReactiveFormsModule],
   exports: [...components],
 })

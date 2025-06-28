@@ -112,9 +112,13 @@
           <h3>Course Authors</h3>
           <div
             class="course__authors-item"
-            *ngFor="let author of courseAuthors; let i = index; trackBy: trackByAuthorIndex"
+            *ngFor="
+              let author of courseAuthorsControls;
+              let i = index;
+              trackBy: trackByAuthorIndex
+            "
           >
-            {{ author.name }}
+            {{ author.value.name }}
             <span class="course__icon" (click)="removeAuthorFromCourse(i)">
               <img src="assets/trash.svg" alt="trash" />
             </span>
