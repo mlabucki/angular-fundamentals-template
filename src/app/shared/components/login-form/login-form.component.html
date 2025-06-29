@@ -6,19 +6,59 @@
         <div class="form__control">
           <label for="email">Email</label>
           <!--Use the name `email` for the form control.-->
-          <input type="text" id="email" placeholder="Input text"/>
-          <span id="emailErrorMessage" class="text-danger">Email is required.</span>
+          <input
+            type="email"
+            id="email"
+            placeholder="Input text"
+            name="email"
+            required
+            ngModel
+            #email="ngModel"
+            emailValidator
+          />
+          <span
+            *ngIf="email.invalid && (email.touched || loginForm.submitted)"
+            id="emailErrorMessage"
+            class="text-danger"
+          >
+            <ng-container *ngIf="email.errors && email.errors['required']">
+              Email is required.
+            </ng-container>
+            <ng-container *ngIf="email.errors && email.errors['email']">
+              Invalid email address.
+            </ng-container>
+          </span>
         </div>
         <div class="form__control">
           <label for="password">Password</label>
           <!--Use the name `password` for the form control.-->
-          <input type="password" id="password" placeholder="Input text"/>
-          <span id="passwordErrorMessage" class="text-danger">Password is required.</span>
+          <input
+            type="password"
+            id="password"
+            placeholder="Input text"
+            name="password"
+            required
+            ngModel
+            #password="ngModel"
+          />
+          <span
+            *ngIf="
+              password.invalid && (password.touched || loginForm.submitted)
+            "
+            id="passwordErrorMessage"
+            class="text-danger"
+          >
+            <ng-container
+              *ngIf="password.errors && password.errors['required']"
+            >
+              Password is required.
+            </ng-container>
+          </span>
         </div>
       </div>
       <div>
         <div class="form__action">
-          <app-button></app-button>
+          <app-button buttonText="Login" type="submit"></app-button>
         </div>
         <div class="form__text">
           If you don't have an account you may <strong>Registration</strong>

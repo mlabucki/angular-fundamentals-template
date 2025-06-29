@@ -10,7 +10,7 @@ import { CourseCardComponent } from "@shared/components/course-card/course-card.
 import { LoginFormComponent } from "@shared/components/login-form/login-form.component";
 import { RegistrationFormComponent } from "@shared/components/registration-form/registration-form.component";
 import { CourseFormComponent } from "@shared/components/course-form/course-form.component";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CustomDatePipe, DurationPipe, AuthorNamesPipe } from "./pipes/pipes";
 import { EmailValidatorDirective } from "@shared/directives/email.directive";
 
