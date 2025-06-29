@@ -1,7 +1,20 @@
+<app-search
+  placeholder="Search courses..."
+  (search)="onSearchCourses($event)"
+></app-search>
+
 <app-courses-list
-  [courses]="courses"
-  [editable]="editable"
-  (showCourse)="showCourse($event)"
+  [courses]="coursesList"
+  [editable]="true"
+  (showCourse)="showInfo($event)"
   (editCourse)="editCourse($event)"
   (deleteCourse)="deleteCourse($event)"
-></app-courses-list>
+  *ngIf="listVisible; else infoTemplate"
+>
+</app-courses-list>
+<ng-template #infoTemplate>
+  <app-course-info
+    [course]="detailedCourse"
+    (backClick)="showList()"
+  ></app-course-info>
+</ng-template>
