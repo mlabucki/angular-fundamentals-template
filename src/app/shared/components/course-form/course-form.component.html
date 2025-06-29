@@ -20,11 +20,11 @@
           "
           class="text-danger"
         >
-          <ng-container *ngIf="courseForm.get('title')?.errors?.['required']"
-            >Title is required.</ng-container
+          <span *ngIf="courseForm.get('title')?.errors?.['required']"
+            >Title is required.</span
           >
-          <ng-container *ngIf="courseForm.get('title')?.errors?.['minlength']"
-            >Title must be at least 2 characters long.</ng-container
+          <span *ngIf="courseForm.get('title')?.errors?.['minlength']"
+            >Title must be at least 2 characters long.</span
           >
         </span>
       </div>
@@ -45,13 +45,11 @@
           "
           class="text-danger"
         >
-          <ng-container
-            *ngIf="courseForm.get('description')?.errors?.['required']"
-            >Description is required.</ng-container
+          <span *ngIf="courseForm.get('description')?.errors?.['required']"
+            >Description is required.</span
           >
-          <ng-container
-            *ngIf="courseForm.get('description')?.errors?.['minlength']"
-            >Description must be at least 2 characters long.</ng-container
+          <span *ngIf="courseForm.get('description')?.errors?.['minlength']"
+            >Description must be at least 2 characters long.</span
           >
         </span>
       </div>
@@ -77,11 +75,11 @@
           "
           class="text-danger"
         >
-          <ng-container *ngIf="courseForm.get('duration')?.errors?.['required']"
-            >Duration is required.</ng-container
+          <span *ngIf="courseForm.get('duration')?.errors?.['required']"
+            >Duration is required.</span
           >
-          <ng-container *ngIf="courseForm.get('duration')?.errors?.['min']"
-            >Duration should not be less than 0.</ng-container
+          <span *ngIf="courseForm.get('duration')?.errors?.['min']"
+            >Duration should not be less than 0.</span
           >
         </span>
       </div>
@@ -109,15 +107,14 @@
               class="text-danger"
               *ngIf="author.invalid && (author.touched || submitted)"
             >
-              <ng-container *ngIf="author.errors?.['required']"
-                >Author name is required.</ng-container
+              <span *ngIf="author.errors?.['required']"
+                >Author name is required.</span
               >
-              <ng-container *ngIf="author.errors?.['minlength']"
-                >Author name must be at least 2 characters long.</ng-container
+              <span *ngIf="author.errors?.['minlength']"
+                >Author name must be at least 2 characters long.</span
               >
-              <ng-container *ngIf="author.errors?.['pattern']"
-                >New author should contain only latin letters and
-                numbers.</ng-container
+              <span *ngIf="author.errors?.['pattern']"
+                >New author should contain only latin letters and numbers.</span
               >
             </span>
             <div class="course__authors">
