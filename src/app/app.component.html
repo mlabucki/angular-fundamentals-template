@@ -3,7 +3,12 @@
   <app-button buttonText="LOGOUT" (click)="onLogout()"></app-button>
 </app-header>
 
-<app-info
+<div class="app-root">
+  <!-- Search component -->
+  <!--<app-search></app-search>-->
+
+  <!-- Info component -->
+  <!-- <app-info
   title="Your List Is Empty"
   text="Please use 'Add New Course' button to add your first course"
 >
@@ -11,31 +16,22 @@
     buttonText="ADD NEW COURSE"
     (click)="onAddNewCourse()"
   ></app-button>
-</app-info>
-
-<app-courses></app-courses>
-
-<app-course-info
-  *ngIf="courses[0]"
-  [course]="courses[0]"
-  (backClick)="onBackClick()"
-></app-course-info>
-
-<div class="app-root">
-  <!-- Search component -->
-  <!--<app-search></app-search>-->
-
-  <!-- Info component -->
-  <!--<app-info></app-info>-->
+</app-info> -->
 
   <!-- Course Card component -->
   <!--<app-course-card></app-course-card>-->
+  <!-- <app-courses></app-courses> -->
+  <!-- <app-course-info
+  *ngIf="courses[0]"
+  [course]="courses[0]"
+  (backClick)="onBackClick()"
+></app-course-info> -->
 
   <!-- Login Form component -->
-  <app-login-form></app-login-form>
+  <!-- <app-login-form></app-login-form> -->
 
   <!-- Login Form component -->
-  <!--<app-registration-form></app-registration-form>-->
+  <app-registration-form></app-registration-form>
 
   <!-- Login Form component -->
   <!--<app-course-form></app-course-form>-->
