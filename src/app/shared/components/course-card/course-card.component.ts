@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from "@angular/core";
+import { DurationPipe } from "../../pipes/duration.pipe";
 
 export interface Course {
   id: string;

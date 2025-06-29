@@ -11,7 +11,8 @@ import { LoginFormComponent } from "@shared/components/login-form/login-form.com
 import { RegistrationFormComponent } from "@shared/components/registration-form/registration-form.component";
 import { CourseFormComponent } from "@shared/components/course-form/course-form.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { CustomDatePipe, DurationPipe, AuthorNamesPipe } from "./pipes/pipes";
+import { CustomDatePipe, AuthorNamesPipe } from "./pipes/pipes";
+import { DurationPipe } from "./pipes/duration.pipe";
 import { EmailValidatorDirective } from "@shared/directives/email.directive";
 
 const components = [

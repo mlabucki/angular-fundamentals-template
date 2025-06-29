@@ -18,19 +18,6 @@ export class CustomDatePipe implements PipeTransform {
 }
 
 @Pipe({
-  name: "duration",
-})
-export class DurationPipe implements PipeTransform {
-  transform(value: number): string {
-    if (typeof value !== "number" || isNaN(value) || value < 0)
-      return "Duration";
-    const hours = Math.floor(value / 60);
-    const minutes = value % 60;
-    return `${hours}:${minutes < 10 ? "0" : ""}${minutes} hours`;
-  }
-}
-
-@Pipe({
   name: "authorNames",
 })
 export class AuthorNamesPipe implements PipeTransform {

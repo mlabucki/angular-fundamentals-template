@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from "@angular/core";
 import { Course } from "../../shared/components/course-card/course-card.component";
+import { DurationPipe } from "../../shared/pipes/duration.pipe";
 
 @Component({
   selector: "app-course-info",
