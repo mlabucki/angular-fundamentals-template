@@ -56,17 +56,8 @@
           id="password"
           placeholder="Input text"
           formControlName="password"
-          togglePassword
-          #togglePassword="togglePassword"
         />
-        <button type="button" (click)="togglePassword.toggle()" class="button-toggle">
-          <img
-            *ngIf="!togglePassword.visible"
-            src="assets/eye-closed.svg"
-            alt="show password"
-          />
-          <img *ngIf="togglePassword.visible" src="assets/eye-open.svg" alt="hide password" />
-        </button>
+
         <span
           id="passwordErrorMessage"
           class="text-danger"
