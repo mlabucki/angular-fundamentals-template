@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from "@angular/core";
+import { Router } from "@angular/router";
 import { Course } from "../../shared/components/course-card/course-card.component";
 import { DurationPipe } from "../../shared/pipes/duration.pipe";
 
@@ -12,7 +13,13 @@ export class CourseInfoComponent {
 
   @Output() backClick = new EventEmitter<void>();
 
+  constructor(private router: Router) {}
+
   onBackClick() {
     this.backClick.emit();
+  }
+
+  onAddNewCourse() {
+    this.router.navigate(["/courses/add"]);
   }
 }

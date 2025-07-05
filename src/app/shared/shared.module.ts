@@ -10,6 +10,7 @@ import { CourseCardComponent } from "@shared/components/course-card/course-card.
 import { LoginFormComponent } from "@shared/components/login-form/login-form.component";
 import { RegistrationFormComponent } from "@shared/components/registration-form/registration-form.component";
 import { CourseFormComponent } from "@shared/components/course-form/course-form.component";
+import { PageNotFoundComponent } from "@shared/components/page-not-found/page-not-found.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CustomDatePipe, AuthorNamesPipe } from "./pipes/pipes";
 import { DurationPipe } from "./pipes/duration.pipe";
@@ -25,6 +26,7 @@ const components = [
   LoginFormComponent,
   RegistrationFormComponent,
   CourseFormComponent,
+  PageNotFoundComponent,
   CustomDatePipe,
   DurationPipe,
   AuthorNamesPipe,

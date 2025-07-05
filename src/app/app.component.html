@@ -1,9 +1,13 @@
 <app-header>
   <p>{{ user.name }}</p>
   <app-button buttonText="LOGOUT" (click)="onLogout()"></app-button>
+  <a routerLink="/login">Login</a>
+  <a routerLink="/registration">Registration</a>
+  <a routerLink="/courses">Courses</a>
 </app-header>
 
 <div class="app-root">
+  <router-outlet></router-outlet>
   <!-- Search component -->
   <!-- <app-search></app-search> -->
 
@@ -20,7 +24,7 @@
 
   <!-- Course Card component -->
   <!--<app-course-card></app-course-card>-->
-  <app-courses></app-courses>
+  <!-- <app-courses></app-courses> -->
   <!-- <app-course-info
     *ngIf="courses[0]"
     [course]="courses[0]"
@@ -28,13 +32,13 @@
   ></app-course-info> -->
 
   <!-- Login Form component -->
-  <app-login-form></app-login-form>
+  <!-- <app-login-form></app-login-form> -->
 
   <!-- Login Form component -->
-  <app-registration-form></app-registration-form>
+  <!-- <app-registration-form></app-registration-form>/ -->
 
   <!-- Login Form component -->
-  <app-course-form></app-course-form>
+  <!-- <app-course-form></app-course-form> -->
 
   <!-- Modal component -->
   <!-- <app-modal [message]="'Message'" [title]="'Title'" [okButtonText]="'Ok'" [cancelButtonText]="'Cancel'"></app-modal> -->

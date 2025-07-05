@@ -9,6 +9,7 @@ import { NotAuthorizedGuard } from "@app/auth/guards/not-authorized.guard";
 import { AuthorizedGuard } from "@app/auth/guards/authorized.guard";
 import { CoursesStoreService } from "@app/services/courses-store.service";
 import { CoursesService } from "@app/services/courses.service";
+import { AppRoutingModule } from "./app.routing";
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,6 +19,7 @@ import { CoursesService } from "@app/services/courses.service";
     FontAwesomeModule,
     CourseInfoModule,
     CoursesModule,
+    AppRoutingModule,
   ],
   providers: [
     AuthorizedGuard,

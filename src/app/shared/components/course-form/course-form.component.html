@@ -1,6 +1,6 @@
 <!-- Replace ::text:: with your code -->
 <h2>Create / Edit Course</h2>
-<form [formGroup]="courseForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="courseForm" (ngSubmit)="onSubmit(courseForm.value)">
   <div class="app-plate">
     <div class="course">
       <h3>Main Info</h3>
@@ -162,7 +162,6 @@
     </div>
   </div>
   <div class="form__action">
-    <app-button buttonText="CANCEL"></app-button>
     <app-button type="submit" buttonText="CREATE COURSE"></app-button>
   </div>
 </form>

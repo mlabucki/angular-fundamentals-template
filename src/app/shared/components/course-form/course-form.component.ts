@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import {
   FormArray,
   FormBuilder,
@@ -6,9 +6,11 @@ import {
   FormGroup,
   Validators,
 } from "@angular/forms";
-
+import { Router, ActivatedRoute } from "@angular/router";
 import { FaIconLibrary } from "@fortawesome/angular-fontawesome";
 import { fas } from "@fortawesome/free-solid-svg-icons";
+import { Course } from "../course-card/course-card.component";
+import { CoursesService } from "../../../services/courses.service";
 
 export type Author = {
   id: string;
@@ -20,14 +22,30 @@ export type Author = {
   templateUrl: "./course-form.component.html",
   styleUrls: ["./course-form.component.scss"],
 })
-export class CourseFormComponent {
+export class CourseFormComponent implements OnInit {
   courseForm!: FormGroup;
   submitted = false;
   courseAuthors: Author[] = [];
+  medium = "";
 
-  constructor(public fb: FormBuilder, public library: FaIconLibrary) {
+  constructor(
+    public fb: FormBuilder,
+    public library: FaIconLibrary,
+    private router: Router,
+    private coursesService: CoursesService,
+    private route: ActivatedRoute
+  ) {
     library.addIconPacks(fas);
     this.buildForm();
+  }
+
+  ngOnInit(): void {
+    this.route.paramMap.subscribe((paramMap) => {
+      const mediumParam = paramMap.get("medium");
+      if (mediumParam) {
+        this.medium = mediumParam;
+      }
+    });
   }
 
   // Use the names `title`, `description`, `author`, 'authors' (for authors list), `duration` for the form controls.
@@ -94,16 +112,14 @@ export class CourseFormComponent {
     return index;
   }
 
-  onSubmit() {
-    this.submitted = true;
-    if (this.courseForm.valid) {
-      console.log(
-        "Submit course form",
-        this.courseForm.value,
-        this.courseAuthors
-      );
+  onSubmit(course: Course) {
+    const result = this.coursesService.createCourse(course);
+    if (result) {
+      result.subscribe(() => {
+        this.router.navigate(["/courses", { medium: this.medium }]);
+      });
     } else {
-      this.courseForm.markAllAsTouched();
+      this.router.navigate(["/courses", { medium: this.medium }]);
     }
   }
 }

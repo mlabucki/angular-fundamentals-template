@@ -1,18 +1,26 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-registration-form",
   templateUrl: "./registration-form.component.html",
   styleUrls: ["./registration-form.component.scss"],
 })
-export class RegistrationFormComponent {
+export class RegistrationFormComponent implements OnInit {
   registrationForm!: FormGroup;
-  // Use the names `name`, `email`, `password` for the form controls.
-  submitted = false;
 
-  constructor(private fb: FormBuilder) {
+  submitted = false;
+  name = "";
+
+  constructor(private fb: FormBuilder, private route: ActivatedRoute) {
     this.buildForm();
+  }
+
+  ngOnInit() {
+    this.route.queryParams.subscribe((params) => {
+      this.name = params["name"];
+    });
   }
 
   buildForm(): void {

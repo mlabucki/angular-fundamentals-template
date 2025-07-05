@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Router, ActivatedRoute } from "@angular/router";
 import { mockedCoursesList } from "@app/shared/mocks/mocks";
 import { Course } from "../../shared/components/course-card/course-card.component";
 
@@ -11,12 +12,20 @@ export class CoursesComponent implements OnInit {
   coursesList: Course[] = [];
   listVisible: boolean = true;
   detailedCourse!: Course;
+  medium = "";
+
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.coursesList = mockedCoursesList.map((course) => ({
-      ...course,
-      creationDate: new Date(course.creationDate),
-    }));
+    this.activatedRoute.paramMap.subscribe((paramMap) => {
+      let medium = paramMap.get("medium");
+      if (medium && medium.toLowerCase() === "all") {
+        this.medium = "";
+      } else if (medium) {
+        this.medium = medium;
+      }
+      this.loadCourses();
+    });
   }
 
   onSearchCourses(searchText: string) {
@@ -38,5 +47,16 @@ export class CoursesComponent implements OnInit {
 
   deleteCourse(course: Course) {
     console.log("delete...." + course.title);
+  }
+
+  onAddNewCourse() {
+    this.router.navigate(["/courses/add"]);
+  }
+
+  loadCourses() {
+    this.coursesList = mockedCoursesList.map((course) => ({
+      ...course,
+      creationDate: new Date(course.creationDate),
+    }));
   }
 }

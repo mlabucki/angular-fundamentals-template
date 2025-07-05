@@ -3,6 +3,11 @@
   (search)="onSearchCourses($event)"
 ></app-search>
 
+<div class="add-course-section">
+  <app-button buttonText="ADD NEW COURSE" (click)="onAddNewCourse()">
+  </app-button>
+</div>
+
 <app-courses-list
   [courses]="coursesList"
   [editable]="true"
