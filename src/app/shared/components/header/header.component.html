@@ -5,4 +5,7 @@
   <div class="app-header__content">
     <ng-content></ng-content>
   </div>
+  <div class="app-header__auth" *ngIf="authService.isAuthorised">
+    <button (click)="logout()" class="logout-btn">Logout</button>
+  </div>
 </div>
