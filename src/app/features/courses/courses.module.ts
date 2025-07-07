@@ -10,6 +10,7 @@ import { CourseInfoModule } from "../course-info/course-info.module";
 import { AuthorizedGuard } from "@app/auth/guards/authorized.guard";
 
 const routes: Routes = [
+  { path: "", component: CoursesComponent, canActivate: [AuthorizedGuard] },
   {
     path: "add",
     component: CourseFormComponent,
@@ -25,7 +26,6 @@ const routes: Routes = [
     component: CourseInfoComponent,
     canActivate: [AuthorizedGuard],
   },
-  { path: "", component: CoursesComponent, canActivate: [AuthorizedGuard] },
 ];
 
 @NgModule({

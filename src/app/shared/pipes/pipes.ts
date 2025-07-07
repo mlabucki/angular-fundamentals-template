@@ -1,5 +1,4 @@
 import { Pipe, PipeTransform } from "@angular/core";
-import { mockedAuthorsList } from "../mocks/mocks";
 
 @Pipe({
   name: "customDate",
@@ -31,8 +30,7 @@ export class AuthorNamesPipe implements PipeTransform {
         if (!authorId || typeof authorId !== "string") {
           return "Unknown Author";
         }
-        const author = mockedAuthorsList.find((a) => a.id === authorId);
-        return author ? `${author.name}` : "Unknown Author";
+        return authorId;
       })
       .join(", ");
   }
