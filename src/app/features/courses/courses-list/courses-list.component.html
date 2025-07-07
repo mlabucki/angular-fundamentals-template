@@ -2,8 +2,8 @@
   <app-course-card
     [course]="course"
     [editable]="editable"
-    (clickOnShow)="handleShow($event)"
-    (clickOnEdit)="handleEdit($event)"
-    (clickOnDelete)="handleDelete($event)"
+    (clickOnShow)="onShowCourse($event)"
+    (clickOnEdit)="onEditCourse($event)"
+    (clickOnDelete)="onDeleteCourse($event)"
   ></app-course-card>
 </ng-container>

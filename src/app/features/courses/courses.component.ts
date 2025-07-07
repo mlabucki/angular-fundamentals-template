@@ -1,7 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-import { Router, ActivatedRoute } from "@angular/router";
-import { mockedCoursesList } from "@app/shared/mocks/mocks";
-import { Course } from "../../shared/components/course-card/course-card.component";
+import { Router } from "@angular/router";
+import { Observable } from "rxjs";
+import { CoursesStoreService } from "../../services/courses-store.service";
+import { UserStoreService } from "../../user/services/user-store.service";
+import { Course } from "../../services/courses.service";
 
 @Component({
   selector: "app-courses",
@@ -9,54 +11,41 @@ import { Course } from "../../shared/components/course-card/course-card.componen
   styleUrls: ["./courses.component.scss"],
 })
 export class CoursesComponent implements OnInit {
-  coursesList: Course[] = [];
-  listVisible: boolean = true;
-  detailedCourse!: Course;
-  medium = "";
+  coursesList$: Observable<Course[]> = this.coursesStore.courses$;
+  isAdmin$ = this.userStore.isAdmin$;
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
+  constructor(
+    private coursesStore: CoursesStoreService,
+    private userStore: UserStoreService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.activatedRoute.paramMap.subscribe((paramMap) => {
-      let medium = paramMap.get("medium");
-      if (medium && medium.toLowerCase() === "all") {
-        this.medium = "";
-      } else if (medium) {
-        this.medium = medium;
-      }
-      this.loadCourses();
-    });
+    this.userStore.getUser();
+    this.coursesStore.getAll();
   }
 
   onSearchCourses(searchText: string) {
-    console.log(`show search text: ${searchText}`);
+    this.coursesStore.filterCourses(searchText);
   }
 
   showInfo(course: Course) {
-    this.listVisible = !this.listVisible;
-    this.detailedCourse = course;
+    this.router.navigate(["/courses", course.id]);
   }
 
   showList() {
-    this.listVisible = !this.listVisible;
+    this.router.navigate(["/courses"]);
   }
 
-  editCourse(course: Course) {
-    console.log("edit...... " + course.title);
+  editCourse(id: string) {
+    this.router.navigate(["/courses/edit", id]);
   }
 
-  deleteCourse(course: Course) {
-    console.log("delete...." + course.title);
+  deleteCourse(id: string) {
+    this.coursesStore.deleteCourse(id);
   }
 
-  onAddNewCourse() {
+  addCourse() {
     this.router.navigate(["/courses/add"]);
-  }
-
-  loadCourses() {
-    this.coursesList = mockedCoursesList.map((course) => ({
-      ...course,
-      creationDate: new Date(course.creationDate),
-    }));
   }
 }
