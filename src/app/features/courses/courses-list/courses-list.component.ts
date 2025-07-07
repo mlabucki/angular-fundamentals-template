@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from "@angular/core";
-import { Course } from "../../../shared/components/course-card/course-card.component";
+import { Course } from "../../../services/courses.service";
 
 @Component({
   selector: "app-courses-list",
@@ -8,30 +8,24 @@ import { Course } from "../../../shared/components/course-card/course-card.compo
 })
 export class CoursesListComponent {
   @Input() courses: Course[] = [];
-  @Input() editable = false;
+  @Input() editable = true;
 
   @Output() showCourse = new EventEmitter<Course>();
-  @Output() editCourse = new EventEmitter<Course>();
-  @Output() deleteCourse = new EventEmitter<Course>();
+  @Output() editCourse = new EventEmitter<string>();
+  @Output() deleteCourse = new EventEmitter<string>();
 
-  handleShow(courseId: string) {
+  onShowCourse(courseId: string): void {
     const course = this.courses.find((c) => c.id === courseId);
     if (course) {
       this.showCourse.emit(course);
     }
   }
 
-  handleEdit(courseId: string) {
-    const course = this.courses.find((c) => c.id === courseId);
-    if (course) {
-      this.editCourse.emit(course);
-    }
+  onEditCourse(courseId: string): void {
+    this.editCourse.emit(courseId);
   }
 
-  handleDelete(courseId: string) {
-    const course = this.courses.find((c) => c.id === courseId);
-    if (course) {
-      this.deleteCourse.emit(course);
-    }
+  onDeleteCourse(courseId: string): void {
+    this.deleteCourse.emit(courseId);
   }
 }

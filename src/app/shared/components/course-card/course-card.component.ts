@@ -1,14 +1,6 @@
 import { Component, Input, Output, EventEmitter } from "@angular/core";
 import { DurationPipe } from "../../pipes/duration.pipe";
-
-export interface Course {
-  id: string;
-  title: string;
-  description: string;
-  creationDate: Date | string;
-  duration: number;
-  authors: string[];
-}
+import { Course } from "../../../services/courses.service";
 
 @Component({
   selector: "app-course-card",

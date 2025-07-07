@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from "@angular/core";
 import { Router } from "@angular/router";
-import { Course } from "../../shared/components/course-card/course-card.component";
+import { Course } from "../../services/courses.service";
 import { DurationPipe } from "../../shared/pipes/duration.pipe";
 
 @Component({
@@ -15,7 +15,7 @@ export class CourseInfoComponent {
 
   constructor(private router: Router) {}
 
-  onBackClick() {
+  onBackClick(): void {
     this.backClick.emit();
   }
 
