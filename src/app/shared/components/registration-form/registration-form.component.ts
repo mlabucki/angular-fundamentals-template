@@ -1,64 +1,37 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Component, ViewChild, OnDestroy } from "@angular/core";
+import { NgForm } from "@angular/forms";
+import { Router } from "@angular/router";
 import { AuthService } from "@app/auth/services/auth.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-registration-form",
   templateUrl: "./registration-form.component.html",
   styleUrls: ["./registration-form.component.scss"],
 })
-export class RegistrationFormComponent implements OnInit {
-  registrationForm!: FormGroup;
+export class RegistrationFormComponent implements OnDestroy {
+  @ViewChild("registrationForm") public registrationForm!: NgForm;
+  registrationSubscription!: Subscription;
 
-  submitted = false;
-  name = "";
-  errorMessage = "";
-
-  constructor(
-    private fb: FormBuilder,
-    private route: ActivatedRoute,
-    private authService: AuthService,
-    private router: Router
-  ) {
-    this.buildForm();
-  }
-
-  ngOnInit() {
-    this.route.queryParams.subscribe((params) => {
-      this.name = params["name"];
-    });
-  }
-
-  buildForm(): void {
-    this.registrationForm = this.fb.group({
-      name: ["", [Validators.required, Validators.minLength(6)]],
-      email: ["", [Validators.required, Validators.email]],
-      password: ["", [Validators.required, Validators.minLength(6)]],
-    });
-  }
+  constructor(private authService: AuthService, private router: Router) {}
 
   onSubmit() {
-    this.submitted = true;
-    this.errorMessage = "";
-
     if (this.registrationForm.valid) {
-      this.authService.register(this.registrationForm.value).subscribe({
-        next: (response) => {
-          if (response.successful) {
-            this.authService.setToken(response.result);
+      const { name, email, password } = this.registrationForm.value;
+      const user = { name, email, password };
+
+      this.registrationSubscription = this.authService
+        .register(user)
+        .subscribe({
+          next: (res) => {
             this.router.navigate(["/courses"]);
-          } else {
-            this.errorMessage = "Registration failed.";
-          }
-        },
-        error: (error) => {
-          this.errorMessage = "Registration failed.";
-          console.error("Registration error:", error);
-        },
-      });
-    } else {
-      this.registrationForm.markAllAsTouched();
+          },
+          error: (err) => console.log(err),
+        });
     }
+  }
+
+  ngOnDestroy() {
+    this.registrationSubscription?.unsubscribe();
   }
 }

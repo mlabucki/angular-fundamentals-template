@@ -1,50 +1,35 @@
-import { Component } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Component, ViewChild, OnDestroy } from "@angular/core";
+import { NgForm } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AuthService } from "@app/auth/services/auth.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-login-form",
   templateUrl: "./login-form.component.html",
   styleUrls: ["./login-form.component.scss"],
 })
-export class LoginFormComponent {
-  loginForm: FormGroup;
-  submitted = false;
-  errorMessage = "";
+export class LoginFormComponent implements OnDestroy {
+  @ViewChild("loginForm") public loginForm!: NgForm;
+  loginSubscription!: Subscription;
 
-  constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private router: Router
-  ) {
-    this.loginForm = this.fb.group({
-      email: ["", [Validators.required, Validators.email]],
-      password: ["", [Validators.required]],
-    });
-  }
+  constructor(private authService: AuthService, private router: Router) {}
 
   onSubmit() {
-    this.submitted = true;
-    this.errorMessage = "";
-
     if (this.loginForm.valid) {
-      this.authService.login(this.loginForm.value).subscribe({
-        next: (response) => {
-          if (response.successful) {
-            this.authService.setToken(response.result);
-            this.router.navigate(["/courses"]);
-          } else {
-            this.errorMessage = "Login failed.";
-          }
+      const { email, password } = this.loginForm.value;
+      const user = { email, password };
+
+      this.loginSubscription = this.authService.login(user).subscribe({
+        next: (res) => {
+          this.router.navigate(["/courses"]);
         },
-        error: (error) => {
-          this.errorMessage = "Login failed.";
-          console.error("Login error:", error);
-        },
+        error: (err) => console.log(err),
       });
-    } else {
-      this.loginForm.markAllAsTouched();
     }
+  }
+
+  ngOnDestroy() {
+    this.loginSubscription?.unsubscribe();
   }
 }
