@@ -10,10 +10,15 @@ import { Observable, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
 import { AuthService } from "../services/auth.service";
 import { Router } from "@angular/router";
+import { SessionStorageService } from "../services/session-storage.service";
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private sessionStorageService: SessionStorageService
+  ) {}
 
   intercept(
     request: HttpRequest<any>,
@@ -33,6 +38,7 @@ export class TokenInterceptor implements HttpInterceptor {
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401) {
           this.authService.logout();
+          this.sessionStorageService.deleteToken();
           this.router.navigate(["/login"]);
         }
         return throwError(() => error);
