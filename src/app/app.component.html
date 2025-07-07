@@ -1,9 +1,8 @@
-<app-header>
-  <p>{{ user.name }}</p>
-  <app-button buttonText="LOGOUT" (click)="onLogout()"></app-button>
-  <a routerLink="/login">Login</a>
-  <a routerLink="/registration">Registration</a>
-  <a routerLink="/courses">Courses</a>
+<app-header
+  ><div class="header-right">
+    <span>{{ username }}</span
+    ><app-button (click)="logout()" buttonText="LOGOUT"></app-button>
+  </div>
 </app-header>
 
 <div class="app-root">

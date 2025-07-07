@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
-import { mockedCoursesList } from "./shared/mocks/mocks";
-import { Course } from "./shared/components/course-card/course-card.component";
+import { AuthService } from "./auth/services/auth.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-root",
@@ -8,23 +8,18 @@ import { Course } from "./shared/components/course-card/course-card.component";
   styleUrls: ["./app.component.scss"],
 })
 export class AppComponent {
-  readonly title = "courses-app";
+  title = "courses-app";
+  username? = "";
+  buttonText = "LOGOUT";
+  titleInfo = "Your List is Empty";
+  textInfo = `'Add New Course' to add your first course`;
+  buttonInfo = "ADD NEW COURSE";
 
-  readonly user = {
-    name: "Michał Łabucki",
-  };
+  constructor(private auth: AuthService, private router: Router) {}
 
-  readonly courses: Course[] = mockedCoursesList.slice(0, 1);
-
-  onBackClick(): void {
-    console.log("Back button clicked");
-  }
-
-  onLogout(): void {
-    console.log("User logged out");
-  }
-
-  onAddNewCourse(): void {
-    console.log("Add new course clicked");
+  logout() {
+    this.auth.logout().subscribe(() => {
+      this.router.navigate(["/login"]);
+    });
   }
 }
