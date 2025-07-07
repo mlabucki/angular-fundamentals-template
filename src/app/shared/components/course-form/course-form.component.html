@@ -1,54 +1,54 @@
 <!-- Replace ::text:: with your code -->
 <h2>Create / Edit Course</h2>
-<form [formGroup]="courseForm" (ngSubmit)="onSubmit(courseForm.value)">
+<form #courseForm="ngForm" (ngSubmit)="onSubmit()">
   <div class="app-plate">
     <div class="course">
       <h3>Main Info</h3>
       <div class="form__control">
         <label for="title">Title</label>
-        <!--Use the name `title` for the form control.-->
         <input
           type="text"
           id="title"
           placeholder="Input text"
-          formControlName="title"
+          name="title"
+          required
+          minlength="2"
+          ngModel
+          #title="ngModel"
         />
         <span
-          *ngIf="
-            courseForm.get('title')?.invalid &&
-            (courseForm.get('title')?.touched || submitted)
-          "
+          *ngIf="title.invalid && (title.touched || courseForm.submitted)"
           class="text-danger"
         >
-          <span *ngIf="courseForm.get('title')?.errors?.['required']"
-            >Title is required.</span
-          >
-          <span *ngIf="courseForm.get('title')?.errors?.['minlength']"
+          <span *ngIf="title.errors?.['required']">Title is required.</span>
+          <span *ngIf="title.errors?.['minlength']"
             >Title must be at least 2 characters long.</span
           >
         </span>
       </div>
       <div class="form__control">
         <label for="description">Description</label>
-        <!--Use the name `description` for the form control.-->
         <textarea
           id="description"
           placeholder="Input text"
           rows="4"
           cols="5"
-          formControlName="description"
+          name="description"
+          required
+          minlength="2"
+          ngModel
+          #description="ngModel"
         ></textarea>
         <span
           *ngIf="
-            courseForm.get('description')?.invalid &&
-            (courseForm.get('description')?.touched || submitted)
+            description.invalid && (description.touched || courseForm.submitted)
           "
           class="text-danger"
         >
-          <span *ngIf="courseForm.get('description')?.errors?.['required']"
+          <span *ngIf="description.errors?.['required']"
             >Description is required.</span
           >
-          <span *ngIf="courseForm.get('description')?.errors?.['minlength']"
+          <span *ngIf="description.errors?.['minlength']"
             >Description must be at least 2 characters long.</span
           >
         </span>
@@ -56,29 +56,29 @@
       <h3>Duration</h3>
       <div class="form__control">
         <div class="course__flex">
-          <!--Use the name `duration` for the form array.-->
           <input
             type="number"
             id="duration"
             class="fixed-width"
             placeholder="Input duration"
-            formControlName="duration"
+            name="duration"
+            required
+            min="0"
+            ngModel
+            #duration="ngModel"
           />
           <div class="course__duration">
-            <strong> {{ courseForm.get("duration")?.value | duration }}</strong>
+            <strong> {{ duration.value | duration }}</strong>
           </div>
         </div>
         <span
-          *ngIf="
-            courseForm.get('duration')?.invalid &&
-            (courseForm.get('duration')?.touched || submitted)
-          "
+          *ngIf="duration.invalid && (duration.touched || courseForm.submitted)"
           class="text-danger"
         >
-          <span *ngIf="courseForm.get('duration')?.errors?.['required']"
+          <span *ngIf="duration.errors?.['required']"
             >Duration is required.</span
           >
-          <span *ngIf="courseForm.get('duration')?.errors?.['min']"
+          <span *ngIf="duration.errors?.['min']"
             >Duration should not be less than 0.</span
           >
         </span>
@@ -89,13 +89,16 @@
           <div class="form__control">
             <label for="author">Author Name</label>
             <div class="course__flex">
-              <!--Use the name `author` for the form control.-->
               <input
                 type="text"
                 id="author"
                 class="fixed-width"
                 placeholder="Input Author Name"
-                [formControl]="author"
+                name="author"
+                minlength="2"
+                pattern="^[a-zA-Z0-9 ]+$"
+                ngModel
+                #author="ngModel"
               />
               <app-button
                 id="createAuthor"
@@ -105,11 +108,8 @@
             </div>
             <span
               class="text-danger"
-              *ngIf="author.invalid && (author.touched || submitted)"
+              *ngIf="author.invalid && (author.touched || courseForm.submitted)"
             >
-              <span *ngIf="author.errors?.['required']"
-                >Author name is required.</span
-              >
               <span *ngIf="author.errors?.['minlength']"
                 >Author name must be at least 2 characters long.</span
               >
@@ -118,24 +118,20 @@
               >
             </span>
             <div class="course__authors">
-              <!--Use the name `authors` for the form array.-->
               <h4>Author List</h4>
               <div
                 class="course__authors-item"
                 *ngFor="
-                  let author of authors.controls;
+                  let author of courseAuthors;
                   let i = index;
                   trackBy: trackByAuthorIndex
                 "
               >
-                {{ author.value.name }}
-                <span class="course__icon" (click)="addAuthorToCourse(i)">
+                {{ author.name }}
+                <span class="course__icon" (click)="addAuthorToCourse(author)">
                   +
                 </span>
-                <span
-                  class="course__icon"
-                  (click)="removeAuthorFromList(author.value.id)"
-                >
+                <span class="course__icon" (click)="removeAuthorFromCourse(i)">
                   <img src="assets/trash.svg" alt="trash" />
                 </span>
               </div>
