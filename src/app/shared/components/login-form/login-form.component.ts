@@ -22,9 +22,16 @@ export class LoginFormComponent implements OnDestroy {
 
       this.loginSubscription = this.authService.login(user).subscribe({
         next: (res) => {
-          this.router.navigate(["/courses"]);
+          console.log("LOGGED!:", res);
+          if (res.successful) {
+            this.router.navigate(["/courses"]);
+          } else {
+            console.error("LOGGIN ERROR", res);
+          }
         },
-        error: (err) => console.log(err),
+        error: (err) => {
+          console.error("Login error:", err);
+        },
       });
     }
   }
