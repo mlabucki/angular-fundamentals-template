@@ -24,7 +24,7 @@ export class RegistrationFormComponent implements OnDestroy {
         .register(user)
         .subscribe({
           next: (res) => {
-            this.router.navigate(["/courses"]);
+            window.location.href = "/courses";
           },
           error: (err) => console.log(err),
         });

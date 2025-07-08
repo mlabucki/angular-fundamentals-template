@@ -3,7 +3,7 @@ import { Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { CoursesStoreService } from "../../services/courses-store.service";
 import { UserStoreService } from "../../user/services/user-store.service";
-import { Course } from "../../services/courses.service";
+import { Course } from "../../types/courseTypes";
 
 @Component({
   selector: "app-courses",
@@ -12,6 +12,7 @@ import { Course } from "../../services/courses.service";
 })
 export class CoursesComponent implements OnInit {
   coursesList$: Observable<Course[]> = this.coursesStore.courses$;
+  isLoading$: Observable<boolean> = this.coursesStore.isLoading$;
   isAdmin$ = this.userStore.isAdmin$;
 
   constructor(
@@ -21,6 +22,7 @@ export class CoursesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log("CoursesComponent ngOnInit");
     this.userStore.getUser();
     this.coursesStore.getAll();
   }

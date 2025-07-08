@@ -8,18 +8,19 @@ import { CourseInfoComponent } from "../course-info/course-info.component";
 import { CoursesListComponent } from "./courses-list/courses-list.component";
 import { CourseInfoModule } from "../course-info/course-info.module";
 import { AuthorizedGuard } from "@app/auth/guards/authorized.guard";
+import { AdminGuard } from "@app/user/guards/admin.guard";
 
 const routes: Routes = [
   { path: "", component: CoursesComponent, canActivate: [AuthorizedGuard] },
   {
     path: "add",
     component: CourseFormComponent,
-    canActivate: [AuthorizedGuard],
+    canActivate: [AuthorizedGuard, AdminGuard],
   },
   {
     path: "edit/:id",
     component: CourseFormComponent,
-    canActivate: [AuthorizedGuard],
+    canActivate: [AuthorizedGuard, AdminGuard],
   },
   {
     path: ":id",

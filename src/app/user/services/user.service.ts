@@ -14,11 +14,12 @@ interface UserResponse {
   providedIn: "root",
 })
 export class UserService {
-  private apiUrl = "http://localhost:4000/api";
+  private apiUrl = "http://localhost:4000";
 
   constructor(private http: HttpClient) {}
 
   getUser(): Observable<UserResponse> {
-    return this.http.get<UserResponse>(`${this.apiUrl}/auth/me`);
+    console.log("UserService.getUser called");
+    return this.http.get<UserResponse>(`${this.apiUrl}/users/me`);
   }
 }

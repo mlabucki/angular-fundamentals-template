@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from "@angular/core";
-import { Course } from "../../../services/courses.service";
+import { Course } from "../../../types/courseTypes";
 
 @Component({
   selector: "app-courses-list",

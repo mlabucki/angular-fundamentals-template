@@ -1,6 +1,5 @@
 <!-- Replace ::text:: with your code -->
-
-<div class="course-info-wrapper" *ngIf="course">
+<div *ngIf="course">
   <div class="title">{{ course.title }}</div>
   <div class="course-info">
     <div class="course-info__description">
@@ -22,21 +21,11 @@
       </div>
       <div>
         <b>Authors: </b
-        ><span class="course-info__info-authors">{{
-          course.authors.join(", ")
-        }}</span>
+        ><span class="course-info__info-authors">{{ course.authors }}</span>
       </div>
     </div>
   </div>
   <div class="navigation-block">
-    <app-button buttonText="BACK" (click)="onBackClick()"></app-button>
-    <app-button
-      buttonText="ADD NEW COURSE"
-      (click)="onAddNewCourse()"
-    ></app-button>
+    <app-button [buttonText]="'back'" (click)="onBack()"></app-button>
   </div>
-</div>
-
-<div *ngIf="!course" class="loading-state">
-  <p>Loading course information...</p>
 </div>

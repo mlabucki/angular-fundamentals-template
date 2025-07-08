@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
-import { Observable, BehaviorSubject, of, tap, map } from "rxjs";
+import { Observable, BehaviorSubject, of, tap, map, throwError } from "rxjs";
+import { catchError } from "rxjs/operators";
 import { HttpClient } from "@angular/common/http";
 import { SessionStorageService } from "./session-storage.service";
 
@@ -44,17 +45,32 @@ export class AuthService {
   login(user: LoginRequest): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.baseUrl}/login`, user).pipe(
       tap((response) => {
+        console.log("LOGIN API RESPONSE:", response);
         if (response.successful) {
-          this.setToken(response.result);
+          const token = response.result.startsWith("Bearer ")
+            ? response.result.slice(7)
+            : response.result;
+          this.setToken(token);
+          this.setUser(response.user);
         }
       })
     );
   }
 
   logout(): Observable<any> {
-    this.sessionStorage.deleteToken();
-    this.isAuthorized$$.next(false);
-    return of({ success: true });
+    return this.http.delete(`${this.baseUrl}/logout`).pipe(
+      tap(() => {
+        this.sessionStorage.deleteToken();
+        this.sessionStorage.deleteUser();
+        this.isAuthorized$$.next(false);
+      }),
+      catchError((error) => {
+        this.sessionStorage.deleteToken();
+        this.sessionStorage.deleteUser();
+        this.isAuthorized$$.next(false);
+        return throwError(() => error);
+      })
+    );
   }
 
   register(user: RegisterRequest): Observable<AuthResponse> {
@@ -80,5 +96,13 @@ export class AuthService {
 
   getToken(): string | null {
     return this.sessionStorage.getToken();
+  }
+
+  setUser(user: { email: string; name: string | null }) {
+    this.sessionStorage.setUser(user);
+  }
+
+  getUser(): { email: string; name: string | null } | null {
+    return this.sessionStorage.getUser();
   }
 }

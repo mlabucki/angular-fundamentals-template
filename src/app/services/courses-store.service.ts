@@ -1,6 +1,8 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable } from "rxjs";
-import { CoursesService, Course, Author } from "./courses.service";
+import { Author } from "@app/types/authorTypes";
+import { Course } from "@app/types/courseTypes";
+import { BehaviorSubject, finalize, map, Observable } from "rxjs";
+import { CoursesService } from "./courses.service";
 
 @Injectable({
   providedIn: "root",
@@ -16,116 +18,99 @@ export class CoursesStoreService {
 
   constructor(private coursesService: CoursesService) {}
 
-  getAll(): void {
+  getAll() {
+    // Add your code here
     this.isLoading$$.next(true);
-    this.coursesService.getAll().subscribe({
-      next: (courses) => {
-        this.courses$$.next(courses);
-        this.isLoading$$.next(false);
-      },
-      error: (error) => {
-        console.error("Error fetching courses:", error);
-        this.isLoading$$.next(false);
-      },
-    });
+    this.coursesService
+      .getAll()
+      .pipe(finalize(() => this.isLoading$$.next(false)))
+      .subscribe({
+        next: (response) => this.courses$$.next(response.result),
+        error: () => this.courses$$.next([]),
+      });
   }
 
-  createCourse(course: Omit<Course, "id" | "creationDate">): void {
+  createCourse(course: Course): void {
+    // replace 'any' with the required interface
+    // Add your code here
     this.isLoading$$.next(true);
-    this.coursesService.createCourse(course).subscribe({
-      next: (response) => {
-        if (response.successful) {
-          this.getAll(); // Refresh the list
-        }
-        this.isLoading$$.next(false);
-      },
-      error: (error) => {
-        console.error("Error creating course:", error);
-        this.isLoading$$.next(false);
-      },
-    });
-  }
-
-  editCourse(id: string, course: Omit<Course, "id" | "creationDate">): void {
-    this.isLoading$$.next(true);
-    this.coursesService.editCourse(id, course).subscribe({
-      next: (response) => {
-        if (response.successful) {
-          this.getAll(); // Refresh the list
-        }
-        this.isLoading$$.next(false);
-      },
-      error: (error) => {
-        console.error("Error editing course:", error);
-        this.isLoading$$.next(false);
-      },
-    });
+    this.coursesService
+      .createCourse(course)
+      .pipe(finalize(() => this.isLoading$$.next(false)))
+      .subscribe(() => this.getAll());
   }
 
   getCourse(id: string): Observable<Course> {
-    return this.coursesService.getCourse(id);
+    // Add your code here
+    return this.coursesService.getCourse(id).pipe(map((res) => res.result));
+  }
+
+  editCourse(id: string, course: Course): void {
+    // Add your code here
+    this.isLoading$$.next(true);
+    this.coursesService
+      .editCourse(id, course)
+      ?.pipe(finalize(() => this.isLoading$$.next(false)))
+      .subscribe(() => this.getAll());
   }
 
   deleteCourse(id: string): void {
+    // Add your code here
     this.isLoading$$.next(true);
-    this.coursesService.deleteCourse(id).subscribe({
-      next: (response) => {
-        if (response.successful) {
-          this.getAll(); // Refresh the list
-        }
-        this.isLoading$$.next(false);
-      },
-      error: (error) => {
-        console.error("Error deleting course:", error);
-        this.isLoading$$.next(false);
-      },
-    });
+    this.coursesService
+      .deleteCourse(id)
+      ?.pipe(finalize(() => this.isLoading$$.next(false)))
+      .subscribe(() => this.getAll());
   }
 
-  filterCourses(searchValue: string): void {
+  filterCourses(value: string): void {
+    // Add your code here
+    if (value.trim() === "") {
+      this.getAll();
+      return;
+    }
     this.isLoading$$.next(true);
-    this.coursesService.filterCourses(searchValue).subscribe({
-      next: (courses) => {
-        this.courses$$.next(courses);
-        this.isLoading$$.next(false);
-      },
-      error: (error) => {
-        console.error("Error filtering courses:", error);
-        this.isLoading$$.next(false);
-      },
-    });
+    this.coursesService
+      .filterCourses(value)
+      .pipe(finalize(() => this.isLoading$$.next(false)))
+      .subscribe({
+        next: (response) => this.courses$$.next(response.result),
+        error: () => this.courses$$.next([]),
+      });
   }
 
   getAllAuthors(): void {
-    this.coursesService.getAllAuthors().subscribe({
-      next: (authors) => {
-        this.authors$$.next(authors);
-      },
-      error: (error) => {
-        console.error("Error fetching authors:", error);
-      },
-    });
+    // Add your code here
+    this.isLoading$$.next(true);
+    this.coursesService
+      .getAllAuthors()
+      .pipe(
+        map((res) => res.result),
+        finalize(() => this.isLoading$$.next(false))
+      )
+      .subscribe({
+        next: (authors) => this.authors$$.next(authors),
+        error: () => this.authors$$.next([]),
+      });
   }
 
-  createAuthor(author: Omit<Author, "id">): void {
-    this.coursesService.createAuthor(author).subscribe({
-      next: (response) => {
-        if (response.successful) {
-          this.getAllAuthors(); // Refresh the authors list
-        }
-      },
-      error: (error) => {
-        console.error("Error creating author:", error);
-      },
-    });
+  createAuthor(name: string): void {
+    // Add your code here
+    this.isLoading$$.next(true);
+    this.coursesService
+      .createAuthor(name)
+      .pipe(finalize(() => this.isLoading$$.next(false)))
+      .subscribe(() => {
+        this.getAllAuthors();
+      });
   }
 
   getAuthorById(id: string): Observable<Author> {
-    return this.coursesService.getAuthorById(id);
-  }
-
-  // Metoda do wyszukiwania kursów
-  searchCourses(searchTerm: string): void {
-    this.filterCourses(searchTerm);
+    // Add your code here
+    this.isLoading$$.next(true);
+    return this.coursesService.getAuthorById(id).pipe(
+      finalize(() => this.isLoading$$.next(false)),
+      map((res) => res.result)
+    );
   }
 }

@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { AuthService } from "./auth/services/auth.service";
 import { Router } from "@angular/router";
 
@@ -7,9 +7,9 @@ import { Router } from "@angular/router";
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.scss"],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = "courses-app";
-  username? = "";
+  username = "";
   buttonText = "LOGOUT";
   titleInfo = "Your List is Empty";
   textInfo = `'Add New Course' to add your first course`;
@@ -17,9 +17,25 @@ export class AppComponent {
 
   constructor(private auth: AuthService, private router: Router) {}
 
+  ngOnInit() {
+    this.updateUsername();
+  }
+
+  updateUsername() {
+    const user = this.auth.getUser();
+    this.username = user?.name || user?.email || "";
+  }
+
   logout() {
-    this.auth.logout().subscribe(() => {
-      this.router.navigate(["/login"]);
+    this.auth.logout().subscribe({
+      next: () => {
+        this.updateUsername();
+        this.router.navigate(["/login"]);
+      },
+      error: () => {
+        this.updateUsername();
+        this.router.navigate(["/login"]);
+      },
     });
   }
 }

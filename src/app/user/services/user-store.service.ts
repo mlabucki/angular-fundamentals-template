@@ -21,10 +21,14 @@ export class UserStoreService {
       .pipe(map((res) => res.result))
       .subscribe({
         next: (user) => {
+          console.log("USER FROM BACKEND:", user);
           this.name$$.next(user.name);
-          this.isAdmin$$.next(user.role.toLowerCase() === "admin");
+          const isAdmin = !!(user.role && user.role.toLowerCase() === "admin");
+          this.isAdmin$$.next(isAdmin);
+          console.log("isAdmin:", isAdmin);
         },
-        error: () => {
+        error: (err) => {
+          console.log("getUser error:", err);
           this.name$$.next("");
           this.isAdmin$$.next(false);
         },

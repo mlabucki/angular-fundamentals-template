@@ -1,86 +1,61 @@
-import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
-
-export interface Course {
-  id: string;
-  title: string;
-  description: string;
-  creationDate: string | Date;
-  duration: number;
-  authors: string[];
-  isTopRated?: boolean;
-}
-
-export interface Author {
-  id: string;
-  name: string;
-}
-
-interface ApiResponse<T> {
-  successful: boolean;
-  result: T;
-}
+import { Injectable } from "@angular/core";
+import { AuthorResponse, AuthorsResponse } from "@app/types/authorTypes";
+import {
+  Course,
+  CourseResponse,
+  CoursesResponse,
+} from "@app/types/courseTypes";
+import { Observable } from "rxjs";
 
 @Injectable({
   providedIn: "root",
 })
 export class CoursesService {
-  private apiUrl = "http://localhost:4000";
+  private readonly baseUrl = "http://localhost:4000";
 
   constructor(private http: HttpClient) {}
-
-  getAll(): Observable<Course[]> {
-    return this.http.get<Course[]>(`${this.apiUrl}/courses/all`);
+  getAll(): Observable<CoursesResponse> {
+    return this.http.get<CoursesResponse>(`${this.baseUrl}/courses/all`);
   }
 
-  createCourse(
-    course: Omit<Course, "id" | "creationDate">
-  ): Observable<ApiResponse<string>> {
-    return this.http.post<ApiResponse<string>>(
-      `${this.apiUrl}/courses/add`,
+  createCourse(course: Course): Observable<CourseResponse> {
+    return this.http.post<CourseResponse>(
+      `${this.baseUrl}/courses/add`,
       course
     );
   }
 
-  editCourse(
-    id: string,
-    course: Omit<Course, "id" | "creationDate">
-  ): Observable<ApiResponse<string>> {
-    return this.http.put<ApiResponse<string>>(
-      `${this.apiUrl}/courses/${id}`,
+  editCourse(id: string, course: Course): Observable<CourseResponse> {
+    return this.http.put<CourseResponse>(
+      `${this.baseUrl}/courses/${id}`,
       course
     );
   }
 
-  getCourse(id: string): Observable<Course> {
-    return this.http.get<Course>(`${this.apiUrl}/courses/${id}`);
+  getCourse(id: string): Observable<CourseResponse> {
+    return this.http.get<CourseResponse>(`${this.baseUrl}/courses/${id}`);
   }
 
-  deleteCourse(id: string): Observable<ApiResponse<string>> {
-    return this.http.delete<ApiResponse<string>>(
-      `${this.apiUrl}/courses/${id}`
+  deleteCourse(id: string): Observable<CourseResponse> {
+    return this.http.delete<CourseResponse>(`${this.baseUrl}/courses/${id}`);
+  }
+
+  filterCourses(value: string): Observable<CoursesResponse> {
+    return this.http.get<CoursesResponse>(
+      `${this.baseUrl}/courses/filter?title=${value}`
     );
   }
 
-  filterCourses(query: string): Observable<Course[]> {
-    return this.http.get<Course[]>(
-      `${this.apiUrl}/courses/filter?title=${query}`
-    );
+  getAllAuthors(): Observable<AuthorsResponse> {
+    return this.http.get<AuthorsResponse>(`${this.baseUrl}/authors/all`);
   }
 
-  getAllAuthors(): Observable<Author[]> {
-    return this.http.get<Author[]>(`${this.apiUrl}/authors/all`);
+  createAuthor(name: string): Observable<AuthorResponse> {
+    return this.http.post<AuthorResponse>(`${this.baseUrl}/authors/add`, name);
   }
 
-  createAuthor(author: Omit<Author, "id">): Observable<ApiResponse<string>> {
-    return this.http.post<ApiResponse<string>>(
-      `${this.apiUrl}/authors/add`,
-      author
-    );
-  }
-
-  getAuthorById(id: string): Observable<Author> {
-    return this.http.get<Author>(`${this.apiUrl}/authors/${id}`);
+  getAuthorById(id: string): Observable<AuthorResponse> {
+    return this.http.get<AuthorResponse>(`${this.baseUrl}/authors/${id}`);
   }
 }

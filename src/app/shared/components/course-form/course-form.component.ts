@@ -3,7 +3,8 @@ import { NgForm } from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import { FaIconLibrary } from "@fortawesome/angular-fontawesome";
 import { fas } from "@fortawesome/free-solid-svg-icons";
-import { Course, Author } from "../../../services/courses.service";
+import { Course } from "../../../types/courseTypes";
+import { Author } from "../../../types/authorTypes";
 import { CoursesStoreService } from "../../../services/courses-store.service";
 import { Subscription } from "rxjs";
 

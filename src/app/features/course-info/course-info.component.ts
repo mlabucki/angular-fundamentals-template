@@ -1,25 +1,32 @@
-import { Component, Input, Output, EventEmitter } from "@angular/core";
-import { Router } from "@angular/router";
-import { Course } from "../../services/courses.service";
-import { DurationPipe } from "../../shared/pipes/duration.pipe";
+import { Component, EventEmitter, Input, Output, OnInit } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import { CoursesStoreService } from "../../services/courses-store.service";
+import { Course } from "../../types/courseTypes";
 
 @Component({
   selector: "app-course-info",
   templateUrl: "./course-info.component.html",
   styleUrls: ["./course-info.component.scss"],
 })
-export class CourseInfoComponent {
+export class CourseInfoComponent implements OnInit {
   @Input() course!: Course;
 
-  @Output() backClick = new EventEmitter<void>();
+  constructor(
+    private route: ActivatedRoute,
+    private store: CoursesStoreService,
+    private router: Router
+  ) {}
 
-  constructor(private router: Router) {}
-
-  onBackClick(): void {
-    this.backClick.emit();
+  ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get("id");
+    if (id) {
+      this.store.getCourse(id).subscribe((course) => {
+        this.course = course;
+      });
+    }
   }
 
-  onAddNewCourse() {
-    this.router.navigate(["/courses/add"]);
+  onBack(): void {
+    this.router.navigate(["/courses"]);
   }
 }
