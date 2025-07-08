@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnDestroy } from "@angular/core";
+import { Component, ViewChild, OnDestroy, OnInit } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import { FaIconLibrary } from "@fortawesome/angular-fontawesome";
@@ -13,10 +13,12 @@ import { Subscription } from "rxjs";
   templateUrl: "./course-form.component.html",
   styleUrls: ["./course-form.component.scss"],
 })
-export class CourseFormComponent implements OnDestroy {
+export class CourseFormComponent implements OnInit, OnDestroy {
   @ViewChild("courseForm") public courseForm!: NgForm;
   courseSubscription!: Subscription;
+  authorsSubscription!: Subscription;
 
+  allAuthors: Author[] = [];
   courseAuthors: Author[] = [];
   editMode = false;
   courseId: string | null = null;
@@ -32,25 +34,32 @@ export class CourseFormComponent implements OnDestroy {
     this.editMode = !!this.courseId;
   }
 
+  ngOnInit() {
+    this.coursesStore.getAllAuthors();
+    this.authorsSubscription = this.coursesStore.authors$.subscribe(
+      (authors) => {
+        this.allAuthors = authors ? [...authors] : [];
+      }
+    );
+  }
+
   createAuthor() {
     const authorName = this.courseForm.value.author?.trim();
     if (!authorName || authorName.length < 2) return;
-
-    const newAuthor: Author = {
-      id: Date.now().toString(),
-      name: authorName,
-    };
-
-    this.courseAuthors.push(newAuthor);
+    this.coursesStore.createAuthor(authorName);
     this.courseForm.form.patchValue({ author: "" });
   }
 
   addAuthorToCourse(author: Author): void {
     this.courseAuthors.push(author);
+    this.allAuthors = this.allAuthors.filter((a) => a.id !== author.id);
   }
 
   removeAuthorFromCourse(index: number): void {
-    this.courseAuthors.splice(index, 1);
+    const [removed] = this.courseAuthors.splice(index, 1);
+    if (removed) {
+      this.allAuthors.push(removed);
+    }
   }
 
   trackByAuthorIndex(index: number): number {
@@ -60,7 +69,6 @@ export class CourseFormComponent implements OnDestroy {
   onSubmit() {
     if (this.courseForm.valid) {
       const { title, description, duration } = this.courseForm.value;
-
       const courseData: Course = {
         id: this.editMode ? this.courseId! : Date.now().toString(),
         title: title,
@@ -69,13 +77,11 @@ export class CourseFormComponent implements OnDestroy {
         duration: duration,
         authors: this.courseAuthors.map((a) => a.id),
       };
-
       if (this.editMode) {
         this.coursesStore.editCourse(courseData.id, courseData);
       } else {
         this.coursesStore.createCourse(courseData);
       }
-
       this.router.navigate(["/courses"]);
     }
   }
@@ -86,5 +92,6 @@ export class CourseFormComponent implements OnDestroy {
 
   ngOnDestroy() {
     this.courseSubscription?.unsubscribe();
+    this.authorsSubscription?.unsubscribe();
   }
 }

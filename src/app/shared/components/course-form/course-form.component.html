@@ -118,11 +118,11 @@
               >
             </span>
             <div class="course__authors">
-              <h4>Author List</h4>
+              <h4>All Authors</h4>
               <div
                 class="course__authors-item"
                 *ngFor="
-                  let author of courseAuthors;
+                  let author of allAuthors;
                   let i = index;
                   trackBy: trackByAuthorIndex
                 "
@@ -130,9 +130,6 @@
                 {{ author.name }}
                 <span class="course__icon" (click)="addAuthorToCourse(author)">
                   +
-                </span>
-                <span class="course__icon" (click)="removeAuthorFromCourse(i)">
-                  <img src="assets/trash.svg" alt="trash" />
                 </span>
               </div>
             </div>
