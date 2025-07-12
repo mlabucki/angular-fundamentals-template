@@ -71,10 +71,16 @@ export class CoursesStoreService {
     }
     this.isLoading$$.next(true);
     this.coursesService
-      .filterCourses(value)
+      .getAll()
       .pipe(finalize(() => this.isLoading$$.next(false)))
       .subscribe({
-        next: (response) => this.courses$$.next(response.result),
+        next: (response) => {
+          const search = value.trim().toLowerCase();
+          const filtered = response.result.filter((course) =>
+            course.title.toLowerCase().includes(search)
+          );
+          this.courses$$.next(filtered);
+        },
         error: () => this.courses$$.next([]),
       });
   }

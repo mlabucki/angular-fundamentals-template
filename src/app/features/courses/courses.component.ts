@@ -15,6 +15,9 @@ export class CoursesComponent implements OnInit {
   isLoading$: Observable<boolean> = this.coursesStore.isLoading$;
   isAdmin$ = this.userStore.isAdmin$;
 
+  isSearchActive: boolean = false;
+  searchText: string = "";
+
   constructor(
     private coursesStore: CoursesStoreService,
     private userStore: UserStoreService,
@@ -28,6 +31,8 @@ export class CoursesComponent implements OnInit {
   }
 
   onSearchCourses(searchText: string) {
+    this.searchText = searchText;
+    this.isSearchActive = searchText.length >= 2;
     this.coursesStore.filterCourses(searchText);
   }
 
