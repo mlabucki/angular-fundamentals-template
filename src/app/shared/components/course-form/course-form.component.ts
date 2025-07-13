@@ -5,7 +5,7 @@ import { FaIconLibrary } from "@fortawesome/angular-fontawesome";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { Course } from "../../../types/courseTypes";
 import { Author } from "../../../types/authorTypes";
-import { CoursesStoreService } from "../../../services/courses-store.service";
+import { CoursesStateFacade } from "../../../store/courses/courses.facade";
 import { Subscription } from "rxjs";
 
 @Component({
@@ -27,7 +27,7 @@ export class CourseFormComponent implements OnInit, OnDestroy {
     public library: FaIconLibrary,
     private router: Router,
     private route: ActivatedRoute,
-    private coursesStore: CoursesStoreService
+    private coursesFacade: CoursesStateFacade
   ) {
     library.addIconPacks(fas);
     this.courseId = this.route.snapshot.paramMap.get("id");
@@ -35,8 +35,8 @@ export class CourseFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.coursesStore.getAllAuthors();
-    this.authorsSubscription = this.coursesStore.authors$.subscribe(
+    this.coursesFacade.getAllAuthors();
+    this.authorsSubscription = this.coursesFacade.authors$.subscribe(
       (authors) => {
         this.allAuthors = authors ? [...authors] : [];
       }
@@ -46,7 +46,7 @@ export class CourseFormComponent implements OnInit, OnDestroy {
   createAuthor() {
     const authorName = this.courseForm.value.author?.trim();
     if (!authorName || authorName.length < 2) return;
-    this.coursesStore.createAuthor(authorName);
+    this.coursesFacade.createAuthor(authorName);
     this.courseForm.form.patchValue({ author: "" });
   }
 
@@ -78,11 +78,10 @@ export class CourseFormComponent implements OnInit, OnDestroy {
         authors: this.courseAuthors.map((a) => a.id),
       };
       if (this.editMode) {
-        this.coursesStore.editCourse(courseData.id, courseData);
+        this.coursesFacade.editCourse(courseData, courseData.id);
       } else {
-        this.coursesStore.createCourse(courseData);
+        this.coursesFacade.createCourse(courseData);
       }
-      this.router.navigate(["/courses"]);
     }
   }
 

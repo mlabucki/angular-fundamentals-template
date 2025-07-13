@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { CoursesStoreService } from "../../services/courses-store.service";
+import { CoursesStateFacade } from "../../store/courses/courses.facade";
 import { Course } from "../../types/courseTypes";
 
 @Component({
@@ -13,15 +13,16 @@ export class CourseInfoComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private store: CoursesStoreService,
+    private coursesFacade: CoursesStateFacade,
     private router: Router
   ) {}
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get("id");
     if (id) {
-      this.store.getCourse(id).subscribe((course) => {
-        this.course = course;
+      this.coursesFacade.getSingleCourse(id);
+      this.coursesFacade.course$.subscribe((course) => {
+        if (course) this.course = course;
       });
     }
   }
