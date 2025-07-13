@@ -1,25 +1,42 @@
 // @ts-nocheck
 import { Injectable } from "@angular/core";
+import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
+import { Course } from "@app/types/courseTypes";
+import * as CoursesActions from "./courses.actions";
+import * as CoursesSelectors from "./courses.selectors";
+import { State } from "../index";
 
 @Injectable({
   providedIn: "root",
 })
 export class CoursesStateFacade {
-  isAllCoursesLoading$: Observable<boolean>;
-  isSingleCourseLoading$: Observable<boolean>;
-  isSearchingState$: Observable<boolean>;
-  courses$: Observable<any[]>;
-  allCourses$: Observable<any[]>;
-  course$: Observable<any>;
-  errorMessage$: Observable<string>;
+  isAllCoursesLoading$: Observable<boolean> = this.store.select(
+    CoursesSelectors.isAllCoursesLoadingSelector
+  );
+  isSingleCourseLoading$: Observable<boolean> = this.store.select(
+    CoursesSelectors.isSingleCourseLoadingSelector
+  );
+  isSearchingState$: Observable<boolean> = this.store.select(
+    CoursesSelectors.isSearchingStateSelector
+  );
+  courses$: Observable<Course[]> = this.store.select(
+    CoursesSelectors.getAllCourses
+  );
+  allCourses$: Observable<Course[]> = this.store.select(
+    CoursesSelectors.getAllCourses
+  );
+  course$: Observable<Course | null> = this.store.select(
+    CoursesSelectors.getCourse
+  );
+  errorMessage$: Observable<string> = this.store.select(
+    CoursesSelectors.getErrorMessage
+  );
 
-  constructor() {
-    // Add your code here
-  }
+  constructor(private store: Store<State>) {}
 
   getAllCourses(): void {
-    // Add your code here
+    this.store.dispatch(CoursesActions.requestAllCourses());
   }
 
   getSingleCourse(id: string): void {
