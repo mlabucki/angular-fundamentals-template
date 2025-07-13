@@ -17,7 +17,6 @@ export class CoursesEffects {
     this.actions$.pipe(
       ofType(CoursesActions.requestAllCourses),
       mergeMap(() => {
-        debugger;
         console.log(
           "getAll$ effect triggered - calling coursesService.getAll()"
         );

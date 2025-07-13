@@ -11,7 +11,6 @@ export let selectCoursesState =
 export let isAllCoursesLoadingSelector = createSelector(
   selectCoursesState,
   (state: CoursesState) => {
-    debugger;
     console.log("isAllCoursesLoadingSelector  state:", state);
     return state.isAllCoursesLoading;
   }
