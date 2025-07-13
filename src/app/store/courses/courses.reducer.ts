@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { Action, createReducer, on } from "@ngrx/store";
 import { Course } from "@app/types/courseTypes";
+import { Author } from "@app/types/authorTypes";
 import * as CoursesActions from "./courses.actions";
 
 // Add your code here
@@ -13,6 +14,8 @@ export interface CoursesState {
   isSingleCourseLoading: boolean;
   isSearchState: boolean;
   errorMessage: string;
+  authors: Author[];
+  isAuthorsLoading: boolean;
 }
 
 export const initialState: CoursesState = {
@@ -22,6 +25,8 @@ export const initialState: CoursesState = {
   isSingleCourseLoading: false,
   isSearchState: false,
   errorMessage: "",
+  authors: [],
+  isAuthorsLoading: false,
 };
 
 export let coursesReducer = createReducer(
@@ -136,8 +141,48 @@ export let coursesReducer = createReducer(
     ...state,
     isAllCoursesLoading: false,
     errorMessage: error,
+  })),
+
+  // Authors actions
+  on(CoursesActions.requestAllAuthors, (state) => ({
+    ...state,
+    isAuthorsLoading: true,
+    errorMessage: "",
+  })),
+
+  on(CoursesActions.requestAllAuthorsSuccess, (state, { authors }) => ({
+    ...state,
+    authors: authors,
+    isAuthorsLoading: false,
+    errorMessage: "",
+  })),
+
+  on(CoursesActions.requestAllAuthorsFail, (state, { error }) => ({
+    ...state,
+    isAuthorsLoading: false,
+    errorMessage: error,
+  })),
+
+  on(CoursesActions.requestCreateAuthor, (state) => ({
+    ...state,
+    isAuthorsLoading: true,
+    errorMessage: "",
+  })),
+
+  on(CoursesActions.requestCreateAuthorSuccess, (state, { author }) => ({
+    ...state,
+    authors: [...state.authors, author],
+    isAuthorsLoading: false,
+    errorMessage: "",
+  })),
+
+  on(CoursesActions.requestCreateAuthorFail, (state, { error }) => ({
+    ...state,
+    isAuthorsLoading: false,
+    errorMessage: error,
   }))
 );
 
-export let reducer = (state: CoursesState, action: Action): CoursesState =>
-  coursesReducer(state, action);
+export let reducer = (state: CoursesState, action: Action): CoursesState => {
+  return coursesReducer(state, action);
+};

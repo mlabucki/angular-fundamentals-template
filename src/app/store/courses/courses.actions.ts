@@ -2,6 +2,7 @@
 import { createAction, props } from "@ngrx/store";
 import { CoursesConstants } from "./courses.constants";
 import { Course } from "@app/types/courseTypes";
+import { Author } from "@app/types/authorTypes";
 
 // Actions for request all Courses
 export const requestAllCourses = createAction(
@@ -94,5 +95,35 @@ export const requestCreateCourseSuccess = createAction(
 
 export const requestCreateCourseFail = createAction(
   CoursesConstants.REQUEST_CREATE_COURSE_FAIL,
+  props<{ error: string }>()
+);
+
+// Actions for authors
+export const requestAllAuthors = createAction(
+  CoursesConstants.REQUEST_ALL_AUTHORS
+);
+
+export const requestAllAuthorsSuccess = createAction(
+  CoursesConstants.REQUEST_ALL_AUTHORS_SUCCESS,
+  props<{ authors: Author[] }>()
+);
+
+export const requestAllAuthorsFail = createAction(
+  CoursesConstants.REQUEST_ALL_AUTHORS_FAIL,
+  props<{ error: string }>()
+);
+
+export const requestCreateAuthor = createAction(
+  CoursesConstants.REQUEST_CREATE_AUTHOR,
+  props<{ name: string }>()
+);
+
+export const requestCreateAuthorSuccess = createAction(
+  CoursesConstants.REQUEST_CREATE_AUTHOR_SUCCESS,
+  props<{ author: Author }>()
+);
+
+export const requestCreateAuthorFail = createAction(
+  CoursesConstants.REQUEST_CREATE_AUTHOR_FAIL,
   props<{ error: string }>()
 );
