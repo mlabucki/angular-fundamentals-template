@@ -17,15 +17,30 @@ export let isAllCoursesLoadingSelector = createSelector(
   }
 );
 
-export let isSearchingStateSelector;
+export const isSearchingStateSelector = createSelector(
+  selectCoursesState,
+  (state: CoursesState) => state.isSearchState
+);
 
-export let isSingleCourseLoadingSelector;
+export const isSingleCourseLoadingSelector = createSelector(
+  selectCoursesState,
+  (state: CoursesState) => state.isSingleCourseLoading
+);
 
 // Selector for getting all courses
-export let getAllCourses;
+export const getAllCourses = createSelector(
+  selectCoursesState,
+  (state: CoursesState) => state.allCourses
+);
 
 // Selector for getting a specific course
-export let getCourse;
+export const getCourse = createSelector(
+  selectCoursesState,
+  (state: CoursesState) => state.course
+);
 
 // Selector for getting the error message
-export let getErrorMessage;
+export const getErrorMessage = createSelector(
+  selectCoursesState,
+  (state: CoursesState) => state.errorMessage
+);
