@@ -9,10 +9,8 @@ import { AppRoutingModule } from "./app-routing.module";
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { TokenInterceptor } from "./auth/interceptors/token.interceptor";
 import { StoreModule } from "@ngrx/store";
-import {
-  coursesFeatureKey,
-  reducer as coursesReducer,
-} from "./store/courses/courses.reducer";
+import { EffectsModule } from "@ngrx/effects";
+import { reducers, effects } from "./store/index";
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,8 +20,8 @@ import {
     SharedModule,
     FontAwesomeModule,
     AppRoutingModule,
-    StoreModule.forRoot({}),
-    StoreModule.forFeature(coursesFeatureKey, coursesReducer),
+    StoreModule.forRoot(reducers),
+    EffectsModule.forRoot(effects),
   ],
   providers: [
     CoursesService,
