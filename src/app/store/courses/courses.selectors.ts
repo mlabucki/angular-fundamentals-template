@@ -1,13 +1,21 @@
 // @ts-nocheck
 // Add your code here
-import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { coursesFeatureKey, CoursesState } from './courses.reducer';
+import { createFeatureSelector, createSelector } from "@ngrx/store";
+import { coursesFeatureKey, CoursesState } from "./courses.reducer";
 
 // Select the courses feature state
-export let selectCoursesState;
+export let selectCoursesState =
+  createFeatureSelector<CoursesState>(coursesFeatureKey);
 
 // Selectors for loading states
-export let isAllCoursesLoadingSelector;
+export let isAllCoursesLoadingSelector = createSelector(
+  selectCoursesState,
+  (state: CoursesState) => {
+    debugger;
+    console.log("isAllCoursesLoadingSelector  state:", state);
+    return state.isAllCoursesLoading;
+  }
+);
 
 export let isSearchingStateSelector;
 

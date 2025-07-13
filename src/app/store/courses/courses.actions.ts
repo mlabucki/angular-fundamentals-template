@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { createAction, props } from "@ngrx/store";
 import { CoursesConstants } from "./courses.constants";
 import { Course } from "@app/types/courseTypes";
