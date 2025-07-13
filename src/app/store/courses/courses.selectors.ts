@@ -32,6 +32,12 @@ export const getAllCourses = createSelector(
   (state: CoursesState) => state.allCourses
 );
 
+// Alias for getAllCourses
+export const getCourses = createSelector(
+  selectCoursesState,
+  (state: CoursesState) => state.allCourses
+);
+
 // Selector for getting a specific course
 export const getCourse = createSelector(
   selectCoursesState,
@@ -42,4 +48,15 @@ export const getCourse = createSelector(
 export const getErrorMessage = createSelector(
   selectCoursesState,
   (state: CoursesState) => state.errorMessage
+);
+
+// Authors selectors
+export const getAuthors = createSelector(
+  selectCoursesState,
+  (state: CoursesState) => state.authors
+);
+
+export const isAuthorsLoadingSelector = createSelector(
+  selectCoursesState,
+  (state: CoursesState) => state.isAuthorsLoading
 );
