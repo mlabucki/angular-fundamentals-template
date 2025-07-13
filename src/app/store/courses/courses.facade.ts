@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { Course } from "@app/types/courseTypes";
+import { Author } from "@app/types/authorTypes";
 import * as CoursesActions from "./courses.actions";
 import * as CoursesSelectors from "./courses.selectors";
 import { State } from "../index";
@@ -34,6 +35,15 @@ export class CoursesStateFacade {
     CoursesSelectors.getCourse
   );
 
+  // Authors observables
+  authors$: Observable<Author[]> = this.store.select(
+    CoursesSelectors.getAuthors
+  );
+
+  isAuthorsLoading$: Observable<boolean> = this.store.select(
+    CoursesSelectors.isAuthorsLoadingSelector
+  );
+
   constructor(private store: Store<State>) {}
 
   getAllCourses(): void {
@@ -41,27 +51,32 @@ export class CoursesStateFacade {
   }
 
   getSingleCourse(id: string): void {
-    // Add your code here
-    console.log("getSingleCourse");
+    this.store.dispatch(CoursesActions.requestSingleCourse({ id }));
   }
 
   getFilteredCourses(searchValue: string): void {
-    // Add your code here
-    console.log("getFilteredCourses");
+    this.store.dispatch(
+      CoursesActions.requestFilteredCourses({ title: searchValue })
+    );
   }
 
   editCourse(body: any, id: string): void {
-    // Add your code here
-    console.log("editCourse");
+    this.store.dispatch(CoursesActions.requestEditCourse({ id, course: body }));
   }
 
   createCourse(body: any): void {
-    // Add your code here
-    console.log("createCourse");
+    this.store.dispatch(CoursesActions.requestCreateCourse({ course: body }));
   }
 
   deleteCourse(id: string): void {
-    // Add your code here
-    console.log("deleteCourse");
+    this.store.dispatch(CoursesActions.requestDeleteCourse({ id }));
+  }
+
+  getAllAuthors(): void {
+    this.store.dispatch(CoursesActions.requestAllAuthors());
+  }
+
+  createAuthor(name: string): void {
+    this.store.dispatch(CoursesActions.requestCreateAuthor({ name }));
   }
 }
