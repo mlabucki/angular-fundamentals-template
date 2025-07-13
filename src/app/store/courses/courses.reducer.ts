@@ -8,7 +8,7 @@ import * as CoursesActions from "./courses.actions";
 export let coursesFeatureKey = "courses";
 
 export interface CoursesState {
-  allCourses: Course[]; // If necessary, replace the type
+  allCourses: Course[] | null; // If necessary, replace the type
   course: Course | null; // If necessary, replace the type
   isAllCoursesLoading: boolean;
   isSingleCourseLoading: boolean;
@@ -19,7 +19,7 @@ export interface CoursesState {
 }
 
 export const initialState: CoursesState = {
-  allCourses: [],
+  allCourses: null,
   course: null,
   isAllCoursesLoading: false,
   isSingleCourseLoading: false,
@@ -113,7 +113,7 @@ export let coursesReducer = createReducer(
 
   on(CoursesActions.requestEditCourseSuccess, (state, { course }) => ({
     ...state,
-    allCourses: state.allCourses.map((c) => (c.id === course.id ? course : c)),
+    course,
     isAllCoursesLoading: false,
     errorMessage: "",
   })),
@@ -132,7 +132,6 @@ export let coursesReducer = createReducer(
 
   on(CoursesActions.requestCreateCourseSuccess, (state, { course }) => ({
     ...state,
-    allCourses: [...state.allCourses, course],
     isAllCoursesLoading: false,
     errorMessage: "",
   })),

@@ -77,6 +77,7 @@ export class CourseFormComponent implements OnInit, OnDestroy {
         duration: duration,
         authors: this.courseAuthors.map((a) => a.id),
       };
+      console.log("courseData:", courseData);
       if (this.editMode) {
         this.coursesFacade.editCourse(courseData, courseData.id);
       } else {

@@ -11,7 +11,7 @@ import { Course } from "../../types/courseTypes";
   styleUrls: ["./courses.component.scss"],
 })
 export class CoursesComponent implements OnInit {
-  coursesList$: Observable<Course[]> = this.coursesFacade.courses$;
+  coursesList$: Observable<Course[] | null> = this.coursesFacade.courses$;
   isLoading$: Observable<boolean> = this.coursesFacade.isAllCoursesLoading$;
   isAdmin$ = this.userStore.isAdmin$;
 

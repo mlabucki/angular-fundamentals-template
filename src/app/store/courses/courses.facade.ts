@@ -15,10 +15,10 @@ export class CoursesStateFacade {
   isAllCoursesLoading$: Observable<boolean> = this.store.select(
     CoursesSelectors.isAllCoursesLoadingSelector
   );
-  courses$: Observable<Course[]> = this.store.select(
+  courses$: Observable<Course[] | null> = this.store.select(
     CoursesSelectors.getAllCourses
   );
-  allCourses$: Observable<Course[]> = this.store.select(
+  allCourses$: Observable<Course[] | null> = this.store.select(
     CoursesSelectors.getAllCourses
   );
   errorMessage$: Observable<string> = this.store.select(
@@ -50,14 +50,14 @@ export class CoursesStateFacade {
     this.store.dispatch(CoursesActions.requestAllCourses());
   }
 
-  getSingleCourse(id: string): void {
-    this.store.dispatch(CoursesActions.requestSingleCourse({ id }));
-  }
-
   getFilteredCourses(searchValue: string): void {
     this.store.dispatch(
       CoursesActions.requestFilteredCourses({ title: searchValue })
     );
+  }
+
+  getSingleCourse(id: string): void {
+    this.store.dispatch(CoursesActions.requestSingleCourse({ id }));
   }
 
   editCourse(body: any, id: string): void {

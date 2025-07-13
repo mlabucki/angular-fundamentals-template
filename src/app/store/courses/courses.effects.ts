@@ -1,15 +1,7 @@
 // @ts-nocheck
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import {
-  catchError,
-  map,
-  mergeMap,
-  withLatestFrom,
-  filter,
-  tap,
-} from "rxjs/operators";
-import { of } from "rxjs";
+import { map, mergeMap, catchError, of, withLatestFrom, tap } from "rxjs";
 import { CoursesService } from "@app/services/courses.service";
 import * as CoursesActions from "./courses.actions";
 import { CoursesStateFacade } from "./courses.facade";
@@ -105,36 +97,6 @@ export class CoursesEffects {
     )
   );
 
-  deleteCourse$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(CoursesActions.requestDeleteCourse),
-      mergeMap((action) =>
-        this.coursesService.deleteCourse(action.id).pipe(
-          map(() => CoursesActions.requestAllCourses()),
-          catchError((error) =>
-            of(CoursesActions.requestDeleteCourseFail({ error: error.message }))
-          )
-        )
-      )
-    )
-  );
-
-  editCourse$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(CoursesActions.requestEditCourse),
-      mergeMap((action) =>
-        this.coursesService.editCourse(action.id, action.course).pipe(
-          map((response) =>
-            CoursesActions.requestEditCourseSuccess({ course: response.result })
-          ),
-          catchError((error) =>
-            of(CoursesActions.requestEditCourseFail({ error: error.message }))
-          )
-        )
-      )
-    )
-  );
-
   createCourse$ = createEffect(() =>
     this.actions$.pipe(
       ofType(CoursesActions.requestCreateCourse),
@@ -150,6 +112,13 @@ export class CoursesEffects {
           )
         )
       )
+    )
+  );
+
+  createCourseSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CoursesActions.requestCreateCourseSuccess),
+      map(() => CoursesActions.requestAllCourses())
     )
   );
 
