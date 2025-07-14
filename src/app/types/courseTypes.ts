@@ -1,18 +1,18 @@
 export type Course = {
-  id: string;
+  id: number | string;
   title: string;
-  description: string;
-  creationDate: string;
-  duration: number;
-  authors: string[];
+  description?: string;
+  creationDate?: string;
+  duration?: number;
+  authors?: string[];
 };
 
 export type CoursesResponse = {
-  successful: boolean;
+  successful?: boolean;
   result: Course[];
 };
 
 export type CourseResponse = {
-  successful: boolean;
+  successful?: boolean;
   result: Course;
 };

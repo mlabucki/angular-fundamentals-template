@@ -79,7 +79,7 @@ export class CourseFormComponent implements OnInit, OnDestroy {
       };
       console.log("courseData:", courseData);
       if (this.editMode) {
-        this.coursesFacade.editCourse(courseData, courseData.id);
+        this.coursesFacade.editCourse(courseData, String(courseData.id));
       } else {
         this.coursesFacade.createCourse(courseData);
       }

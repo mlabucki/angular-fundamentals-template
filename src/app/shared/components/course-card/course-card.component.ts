@@ -16,15 +16,15 @@ export class CourseCardComponent implements OnInit {
   @Output() clickOnDelete = new EventEmitter<string>();
 
   onShowCourse(): void {
-    this.clickOnShow.emit(this.course.id);
+    this.clickOnShow.emit(String(this.course.id));
   }
 
   onEditCourse(): void {
-    this.clickOnEdit.emit(this.course.id);
+    this.clickOnEdit.emit(String(this.course.id));
   }
 
   onDeleteCourse(): void {
-    this.clickOnDelete.emit(this.course.id);
+    this.clickOnDelete.emit(String(this.course.id));
   }
 
   ngOnInit() {

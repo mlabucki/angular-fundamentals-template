@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { map, mergeMap, catchError, of, withLatestFrom, tap } from "rxjs";
@@ -39,8 +38,8 @@ export class CoursesEffects {
       ofType(CoursesActions.requestFilteredCourses),
       withLatestFrom(this.coursesStateFacade.allCourses$),
       map(([action, allCourses]) => {
-        const filtered = allCourses.filter((course) =>
-          course.title.toLowerCase().includes(action.searchValue.toLowerCase())
+        const filtered = (allCourses ?? []).filter((course) =>
+          course.title.toLowerCase().includes(action.title.toLowerCase())
         );
         return CoursesActions.requestFilteredCoursesSuccess({
           courses: filtered,
@@ -72,7 +71,9 @@ export class CoursesEffects {
       ofType(CoursesActions.requestDeleteCourse),
       mergeMap((action) =>
         this.coursesService.deleteCourse(action.id).pipe(
-          map(() => CoursesActions.requestAllCourses()),
+          map(() =>
+            CoursesActions.requestDeleteCourseSuccess({ id: action.id })
+          ),
           catchError((error) =>
             of(CoursesActions.requestDeleteCourseFail({ error: error.message }))
           )

@@ -4,7 +4,7 @@ import { Pipe, PipeTransform } from "@angular/core";
   name: "customDate",
 })
 export class CustomDatePipe implements PipeTransform {
-  transform(value: Date | string | number): string {
+  transform(value: Date | string | number | undefined): string {
     if (!value) return "Creation Date";
     const date = new Date(value);
     if (isNaN(date.getTime())) return "Creation Date";
@@ -20,7 +20,7 @@ export class CustomDatePipe implements PipeTransform {
   name: "authorNames",
 })
 export class AuthorNamesPipe implements PipeTransform {
-  transform(authorIds: string[]): string {
+  transform(authorIds: string[] | undefined): string {
     if (!authorIds || !Array.isArray(authorIds) || authorIds.length === 0) {
       return "Authors";
     }

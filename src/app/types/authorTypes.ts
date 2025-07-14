@@ -4,11 +4,11 @@ export type Author = {
 };
 
 export type AuthorsResponse = {
-  successful: boolean;
+  successful?: boolean;
   result: Author[];
 };
 
 export type AuthorResponse = {
-  successful: boolean;
+  successful?: boolean;
   result: Author;
 };

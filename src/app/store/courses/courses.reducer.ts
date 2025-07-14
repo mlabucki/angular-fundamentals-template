@@ -8,8 +8,8 @@ import * as CoursesActions from "./courses.actions";
 export let coursesFeatureKey = "courses";
 
 export interface CoursesState {
-  allCourses: Course[] | null; // If necessary, replace the type
-  course: Course | null; // If necessary, replace the type
+  allCourses: Course[] | null;
+  course: Course | null;
   isAllCoursesLoading: boolean;
   isSingleCourseLoading: boolean;
   isSearchState: boolean;
@@ -95,7 +95,7 @@ export let coursesReducer = createReducer(
     errorMessage: "",
   })),
 
-  on(CoursesActions.requestDeleteCourseSuccess, (state) => ({
+  on(CoursesActions.requestDeleteCourseSuccess, (state, { id }) => ({
     ...state,
     errorMessage: "",
   })),

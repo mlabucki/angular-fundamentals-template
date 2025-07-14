@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { createAction, props } from "@ngrx/store";
 import { CoursesConstants } from "./courses.constants";
 import { Course } from "@app/types/courseTypes";
@@ -38,7 +37,7 @@ export const requestSingleCourseFail = createAction(
 // Actions for request filtered Courses
 export const requestFilteredCourses = createAction(
   CoursesConstants.REQUEST_FILTERED_COURSES,
-  props<{ searchValue: string }>()
+  props<{ title: string }>()
 );
 
 export const requestFilteredCoursesSuccess = createAction(
@@ -58,7 +57,8 @@ export const requestDeleteCourse = createAction(
 );
 
 export const requestDeleteCourseSuccess = createAction(
-  CoursesConstants.REQUEST_DELETE_COURSE_SUCCESS
+  CoursesConstants.REQUEST_DELETE_COURSE_SUCCESS,
+  props<{ id: string }>()
 );
 
 export const requestDeleteCourseFail = createAction(
