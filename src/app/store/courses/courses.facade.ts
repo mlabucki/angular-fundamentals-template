@@ -51,9 +51,7 @@ export class CoursesStateFacade {
   }
 
   getFilteredCourses(searchValue: string): void {
-    this.store.dispatch(
-      CoursesActions.requestFilteredCourses({ title: searchValue })
-    );
+    this.store.dispatch(CoursesActions.requestFilteredCourses({ searchValue }));
   }
 
   getSingleCourse(id: string): void {
